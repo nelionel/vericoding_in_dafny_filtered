@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1269 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var deg1 := EffectiveDegree(c1);\n  var deg2 := EffectiveDegree(c2);\n  \n  quotient := seq(|c1|, i => 0.0);\n  remainder := seq(|c1|, i => if i < |c1| then c1[i] else 0.0);\n  \n  if deg1 < deg2 {\n    return;\n  }\n  \n  if deg2 == 0 {\n    var divisor := c2[0];\n    quotient := seq(|c1|, i => if i < |c1| then c1[i] / divisor else 0.0);\n    remainder := seq(|c1|, i => 0.0);\n    return;\n  }\n  \n  var q := seq(|c1|, i => 0.0);\n  var r := seq(|c1|, i => if i < |c1| then c1[i] else 0.0);\n  \n  var currentDeg := deg1;\n  var leadingCoeff := c2[deg2];\n  \n  while currentDeg >= deg2\n    decreases currentDeg\n    invariant -1 <= currentDeg <= deg1\n    invariant |q| == |c1| && |r| == |c1|\n  {\n    var rDeg := EffectiveDegree(r);\n    if rDeg < deg2 {\n      break;\n    }\n    \n    var coeff := r[rDeg] / leadingCoeff;\n    q := q[rDeg := coeff];\n    \n    var pos := rDeg - deg2;\n    var j := 0;\n    while j <= deg2\n      decreases deg2 - j\n      invariant 0 <= j <= deg2 + 1\n      invariant |r| == |c1|\n    {\n      if pos + j < |r| {\n        r := r[pos + j := r[pos + j] - coeff * c2[j]];\n      }\n      j := j + 1;\n    }\n    \n    currentDeg := currentDeg - 1;\n  }\n  \n  quotient := q;\n  remainder := r;\n}"
+]
+```
+--------------------------------------------------------------------------------

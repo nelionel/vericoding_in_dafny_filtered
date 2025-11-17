@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1353 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function ConvertLaguerreCoefficient(c: seq<real>, idx: nat, polyDegree: nat): real\n  requires idx < |c|\n  requires polyDegree < |c|\n{\n  c[idx] * LaguerrePolynomialCoefficient(idx, polyDegree)\n}\n\nfunction LaguerrePolynomialCoefficient(laguerreIndex: nat, polyPower: nat): real\n{\n  if laguerreIndex == 0 then\n    if polyPower == 0 then 1.0 else 0.0\n  else if laguerreIndex == 1 then\n    if polyPower == 0 then 1.0\n    else if polyPower == 1 then -1.0\n    else 0.0\n  else\n    0.0\n}\n\nfunction SumLaguerreContributions(c: seq<real>, polyDegree: nat): real\n  requires polyDegree < |c|\n  decreases |c|\n{\n  if |c| == 0 then 0.0\n  else if |c| == 1 then\n    ConvertLaguerreCoefficient(c, 0, polyDegree)\n  else\n    ConvertLaguerreCoefficient(c, |c| - 1, polyDegree) + SumLaguerreContributions(c[..|c| - 1], polyDegree)\n}\n\nfunction BuildPolynomialCoeffs(c: seq<real>, idx: nat): seq<real>\n  requires |c| > 0\n  requires idx <= |c|\n  ensures |BuildPolynomialCoeffs(c, idx)| == |c|\n  decreases idx\n{\n  if idx == 0 then\n    seq(|c|, i => 0.0)\n  else\n    var prev := BuildPolynomialCoeffs(c, idx - 1);\n    seq(|c|, i => if i < idx then SumLaguerreContributions(c[..idx], i) else 0.0)\n}",
+  "{\n  if |c| == 1 {\n    result := c;\n  } else {\n    result := seq(|c|, i => SumLaguerreContributions(c, i));\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

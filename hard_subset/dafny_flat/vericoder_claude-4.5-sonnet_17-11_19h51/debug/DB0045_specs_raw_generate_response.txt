@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1286 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma ExpModDistributesOverSquare(base: nat, exp: nat, modulus: nat)\n  requires modulus > 1\n  ensures (Exp_int(base, exp) % modulus) * (Exp_int(base, exp) % modulus) % modulus == Exp_int(base, 2 * exp) % modulus\n{\n  calc {\n    (Exp_int(base, exp) % modulus) * (Exp_int(base, exp) % modulus) % modulus;\n    ==\n    ((Exp_int(base, exp) * Exp_int(base, exp)) % modulus) % modulus;\n    ==\n    (Exp_int(base, exp) * Exp_int(base, exp)) % modulus;\n    ==\n    Exp_int(base, 2 * exp) % modulus;\n  }\n}\n\nlemma ExpAdditive(base: nat, exp1: nat, exp2: nat)\n  ensures Exp_int(base, exp1 + exp2) == Exp_int(base, exp1) * Exp_int(base, exp2)\n{\n}\n\nlemma ModMulDistributes(a: nat, b: nat, m: nat)\n  requires m > 1\n  ensures (a % m) * (b % m) % m == (a * b) % m\n{\n}",
+  "{\n  if sy == \"0\" {\n    res := \"1\";\n    return;\n  }\n  \n  var lastBit := sy[|sy| - 1];\n  var syPrime := sy[0..|sy| - 1];\n  \n  var recursiveResult := ModExp(sx, syPrime, sz);\n  \n  var squared := Mul(recursiveResult, recursiveResult);\n  var quotient1, remainder1 := DivMod(squared, sz);\n  \n  if lastBit == '0' {\n    res := remainder1;\n  } else {\n    var product := Mul(remainder1, sx);\n    var quotient2, remainder2 := DivMod(product, sz);\n    res := remainder2;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1165 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma MaxProductProperty(n: int, maxSoFar: int)\n  requires n >= 1\n  requires maxSoFar == MaxProductOfDigitsInRange(n)\n  ensures forall k :: 1 <= k <= n ==> ProductOfDigits(k) <= maxSoFar\n  ensures exists k :: 1 <= k <= n && ProductOfDigits(k) == maxSoFar\n{\n  if n == 1 {\n  } else {\n    var current := ProductOfDigits(n);\n    var rest := MaxProductOfDigitsInRange(n - 1);\n    MaxProductProperty(n - 1, rest);\n  }\n}\n\nlemma ProductOfDigitsPositive(x: int)\n  requires x >= 0\n  ensures ProductOfDigits(x) >= 1\n{\n  if x == 0 {\n  } else if x < 10 {\n  } else {\n    ProductOfDigitsPositive(x / 10);\n  }\n}\n\nlemma MaxProductPositive(n: int)\n  requires n >= 1\n  ensures MaxProductOfDigitsInRange(n) >= 1\n{\n  if n == 1 {\n  } else {\n    ProductOfDigitsPositive(n);\n    MaxProductPositive(n - 1);\n  }\n}",
+  "{\n  result := 1;\n  var i := 1;\n  while i <= n\n    invariant 1 <= i <= n + 1\n    invariant result == MaxProductOfDigitsInRange(i - 1)\n  {\n    var prod := ProductOfDigits(i);\n    if prod > result {\n      result := prod;\n    }\n    i := i + 1;\n  }\n  MaxProductProperty(n, result);\n  MaxProductPositive(n);\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1039 characters
+--------------------------------------------------------------------------------
+[
+"lemma MonotonicityLemma(days: int, v0: int, v1: int, a: int, l: int)\n    requires days >= 0\n    requires v0 >= 0 && v1 >= v0 && a >= 0 && l >= 0\n    ensures computePosition(days + 1, v0, v1, a, l) >= computePosition(days, v0, v1, a, l)\n{\n    if days == 0 {\n    } else {\n        MonotonicityLemma(days - 1, v0, v1, a, l);\n    }\n}\n\nlemma PositionIncreases(days: int, v0: int, v1: int, a: int, l: int)\n    requires days >= 0\n    requires v0 >= 0 && v1 >= v0 && a >= 0 && l >= 0\n    requires v0 > l\n    ensures computePosition(days + 1, v0, v1, a, l) > computePosition(days, v0, v1, a, l)\n{\n    if days == 0 {\n    } else {\n        MonotonicityLemma(days - 1, v0, v1, a, l);\n    }\n}",
+"{\n  result := 1;\n  while computePosition(result, v0, v1, a, l) < c\n    invariant result >= 1\n    invariant forall days :: 1 <= days < result ==> computePosition(days, v0, v1, a, l) < c\n    decreases c - computePosition(result, v0, v1, a, l)\n  {\n    MonotonicityLemma(result, v0, v1, a, l);\n    result := result + 1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 290 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var misha_score := CalculateScore(a, c);\n  var vasya_score := CalculateScore(b, d);\n  \n  if misha_score > vasya_score {\n    result := \"Misha\";\n  } else if vasya_score > misha_score {\n    result := \"Vasya\";\n  } else {\n    result := \"Tie\";\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

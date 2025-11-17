@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1413 characters
+--------------------------------------------------------------------------------
+[
+"lemma DigitSumMonotonic(a: int, b: int)\n  requires a >= 0 && b >= 0\n  ensures digitSum(intToDigits(a)) >= 0 && digitSum(intToDigits(b)) >= 0\n{\n}\n\nlemma DigitSumPositive(x: int)\n  requires x >= 1\n  ensures digitSum(intToDigits(x)) >= 1\n{\n}\n\nlemma ResultValid(maxVal: int, maxDigitSum: int, maxNum: int)\n  requires maxNum >= 1 && maxNum <= maxVal\n  requires forall y :: 1 <= y <= maxVal ==> digitSum(intToDigits(y)) <= maxDigitSum\n  requires digitSum(intToDigits(maxNum)) == maxDigitSum\n  requires forall y :: 1 <= y <= maxVal && digitSum(intToDigits(y)) == maxDigitSum ==> y <= maxNum\n  ensures ValidInput(maxVal) ==> ValidResult(maxVal, maxNum)\n{\n}",
+"{\n  var i := 1;\n  var maxDigitSum := digitSum(intToDigits(1));\n  var maxNum := 1;\n  \n  while i < x\n    invariant 1 <= i <= x\n    invariant maxNum >= 1 && maxNum <= i\n    invariant maxDigitSum == digitSum(intToDigits(maxNum))\n    invariant forall y :: 1 <= y <= i ==> digitSum(intToDigits(y)) <= maxDigitSum\n    invariant forall y :: 1 <= y <= i && digitSum(intToDigits(y)) == maxDigitSum ==> y <= maxNum\n  {\n    i := i + 1;\n    var currentDigitSum := digitSum(intToDigits(i));\n    \n    if currentDigitSum > maxDigitSum {\n      maxDigitSum := currentDigitSum;\n      maxNum := i;\n    } else if currentDigitSum == maxDigitSum {\n      if i > maxNum {\n        maxNum := i;\n      }\n    }\n  }\n  \n  result := maxNum;\n}"
+]
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1066 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 3): simplified lemmas to avoid timeout */\nlemma ExpDoubleY(x: nat, y: nat)\n  ensures Exp_int(x, 2 * y) == Exp_int(Exp_int(x, y), 2)\n{\n  if y == 0 {\n  } else {\n    ExpDoubleY(x, y - 1);\n  }\n}\n\nlemma ExpOddY(x: nat, y: nat)\n  requires y > 0\n  ensures Exp_int(x, 2 * y + 1) == x * Exp_int(Exp_int(x, y), 2)\n{\n  ExpDoubleY(x, y);\n}",
+  "{\n  /* code modified by LLM (iteration 3): simplified base cases and removed unnecessary lemma calls */\n  if |sy| == 1 && sy[0] == '0' {\n    res := \"1\";\n    return;\n  }\n  \n  if |sy| == 1 && sy[0] == '1' {\n    var _, remainder := DivMod(sx, sz);\n    res := remainder;\n    return;\n  }\n  \n  var half_y := sy[0..|sy|-1];\n  var last_bit := sy[|sy|-1];\n  \n  var half_res := ModExp(sx, half_y, sz);\n  var squared := Mul(half_res, half_res);\n  var _, sq_mod := DivMod(squared, sz);\n  \n  if last_bit == '0' {\n    res := sq_mod;\n  } else {\n    var temp := Mul(sq_mod, sx);\n    var _, final_mod := DivMod(temp, sz);\n    res := final_mod;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

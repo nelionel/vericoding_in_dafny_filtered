@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 472 characters
+--------------------------------------------------------------------------------
+[
+"/* helper modified by LLM (iteration 3): removed gcd and lcm to avoid timeouts, use direct computation */",
+"{\n  /* code modified by LLM (iteration 3): compute LCM directly using division properties */\n  var tenPowK := power(10, k);\n  var g := n;\n  var temp := tenPowK;\n  \n  while temp > 0\n    invariant g > 0\n    invariant temp >= 0\n    decreases temp\n  {\n    var r := g % temp;\n    g := temp;\n    temp := r;\n  }\n  \n  result := (n * tenPowK) / g;\n}"
+]
+--------------------------------------------------------------------------------

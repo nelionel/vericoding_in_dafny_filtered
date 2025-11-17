@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 349 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var neg_count := 0;\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant neg_count == count_negative_temp_days(temps[..i])\n  {\n    if temps[i] < 0 {\n      neg_count := neg_count + 1;\n    }\n    i := i + 1;\n  }\n  \n  if neg_count > k {\n    result := -1;\n  } else {\n    result := neg_count;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

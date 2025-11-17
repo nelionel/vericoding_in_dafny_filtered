@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1755 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 2): strengthened lemma to prove optimal rotation exists and matches the computed result */\nlemma OptimalRotationsExists(cameraAngle: int, candidate: int)\n    requires 0 <= candidate <= 3\n    requires forall r :: 0 <= r <= 3 ==> \n        ImageDeviationAfterRotations(cameraAngle, candidate) < ImageDeviationAfterRotations(cameraAngle, r) ||\n        (ImageDeviationAfterRotations(cameraAngle, candidate) == ImageDeviationAfterRotations(cameraAngle, r) && candidate <= r)\n    ensures IsOptimalRotations(cameraAngle, candidate)\n{\n}",
+  "/* code modified by LLM (iteration 2): compute optimal rotation and invoke lemma to prove postcondition */\n{\n    var dev0 := ImageDeviationAfterRotations(x, 0);\n    var dev1 := ImageDeviationAfterRotations(x, 1);\n    var dev2 := ImageDeviationAfterRotations(x, 2);\n    var dev3 := ImageDeviationAfterRotations(x, 3);\n    \n    result := 0;\n    var minDev := dev0;\n    \n    if dev1 < minDev || (dev1 == minDev && 1 < result) {\n        result := 1;\n        minDev := dev1;\n    }\n    \n    if dev2 < minDev || (dev2 == minDev && 2 < result) {\n        result := 2;\n        minDev := dev2;\n    }\n    \n    if dev3 < minDev || (dev3 == minDev && 3 < result) {\n        result := 3;\n        minDev := dev3;\n    }\n    \n    assert minDev == ImageDeviationAfterRotations(x, result);\n    assert forall r :: 0 <= r <= 3 ==> minDev <= ImageDeviationAfterRotations(x, r);\n    assert forall r :: 0 <= r <= 3 ==> \n        ImageDeviationAfterRotations(x, result) < ImageDeviationAfterRotations(x, r) ||\n        (ImageDeviationAfterRotations(x, result) == ImageDeviationAfterRotations(x, r) && result <= r);\n    OptimalRotationsExists(x, result);\n}"
+]
+```
+--------------------------------------------------------------------------------

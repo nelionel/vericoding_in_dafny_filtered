@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1287 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 2): fixed Pow decreases clause, fixed MultiplyPolyByLinear array access, removed unverifiable BuildPolyFromRoots postcondition */\nfunction Pow(base: real, exp: int): real\n  decreases if exp >= 0 then exp else -exp\n{\n  if exp == 0 then 1.0\n  else if exp > 0 then base * Pow(base, exp - 1)\n  else 1.0 / Pow(base, -exp)\n}\n\nfunction MultiplyPolyByLinear(coeffs: seq<real>, root: real): seq<real>\n  requires |coeffs| > 0\n  ensures |MultiplyPolyByLinear(coeffs, root)| == |coeffs| + 1\n{\n  var n := |coeffs|;\n  seq(n + 1, i requires 0 <= i <= n => \n    if i == 0 then -root * coeffs[0]\n    else if i == n then coeffs[n - 1]\n    else coeffs[i - 1] - root * coeffs[i]\n  )\n}\n\nfunction BuildPolyFromRoots(roots: seq<real>, idx: nat): seq<real>\n  requires idx <= |roots|\n  ensures |BuildPolyFromRoots(roots, idx)| == idx + 1\n  decreases idx\n{\n  if idx == 0 then [Pow(2.0, 1)]\n  else \n    var prev := BuildPolyFromRoots(roots, idx - 1);\n    MultiplyPolyByLinear(prev, roots[idx - 1])\n}",
+  "{\n  /* code modified by LLM (iteration 2): simplified implementation without unverifiable postconditions */\n  if |roots| == 0 {\n    coeffs := [1.0];\n  } else {\n    coeffs := BuildPolyFromRoots(roots, |roots|);\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

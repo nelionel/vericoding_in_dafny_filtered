@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 612 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function gcd(a: int, b: int): int\n  requires a > 0 && b > 0\n  decreases a + b\n{\n  if a == b then a\n  else if a > b then gcd(a - b, b)\n  else gcd(a, b - a)\n}\n\nfunction abs(x: int): int\n{\n  if x >= 0 then x else -x\n}\n\nfunction gcdGeneral(a: int, b: int): int\n  requires a > 0 || b > 0\n{\n  if a == 0 then b\n  else if b == 0 then a\n  else if a > 0 && b > 0 then gcd(a, b)\n  else if a > 0 then a\n  else b\n}",
+  "{\n  var totalDraws := t + w;\n  var whiteDraws := w;\n  var g := gcd(whiteDraws, totalDraws);\n  numerator := whiteDraws / g;\n  denominator := totalDraws / g;\n}"
+]
+```
+--------------------------------------------------------------------------------

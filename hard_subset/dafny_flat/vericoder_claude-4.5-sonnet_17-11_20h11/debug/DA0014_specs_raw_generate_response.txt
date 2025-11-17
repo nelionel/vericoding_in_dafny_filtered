@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 763 characters
+--------------------------------------------------------------------------------
+[
+  "function gcd(a: int, b: int): int\n  requires a >= 0 && b >= 0\n  decreases a + b\n{\n  if a == 0 then b\n  else if b == 0 then a\n  else if a < b then gcd(a, b - a)\n  else gcd(a - b, b)\n}\n\nlemma gcd_commutative(a: int, b: int)\n  requires a >= 0 && b >= 0\n  ensures gcd(a, b) == gcd(b, a)\n  decreases a + b\n{\n}\n\nlemma gcd_divides(a: int, b: int, d: int)\n  requires a >= 0 && b >= 0\n  requires d == gcd(a, b)\n  ensures d > 0 ==> (exists k: int :: a == k * d) && (exists m: int :: b == m * d)\n{\n}\n\nfunction abs(x: int): int\n{\n  if x >= 0 then x else -x\n}",
+  "{\n  var totalBalls := t + w + b;\n  var favorable := t + w;\n  \n  var g := gcd(favorable, totalBalls);\n  \n  numerator := favorable / g;\n  denominator := totalBalls / g;\n}"
+]
+--------------------------------------------------------------------------------

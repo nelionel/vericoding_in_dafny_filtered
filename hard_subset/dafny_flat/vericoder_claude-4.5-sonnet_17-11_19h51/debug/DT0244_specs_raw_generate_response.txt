@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1174 characters
+--------------------------------------------------------------------------------
+[
+  "// Helper to create a zero vector of given length\nfunction ZeroVector(n: nat): Vector\n  ensures |ZeroVector(n)| == n\n  ensures AllNonNegative(ZeroVector(n))\n  ensures IsSortedDescending(ZeroVector(n))\n  ensures forall i :: 0 <= i < n ==> ZeroVector(n)[i] == 0.0\n  ensures SumOfSquares(ZeroVector(n)) == 0.0\n{\n  if n == 0 then []\n  else [0.0] + ZeroVector(n - 1)\n}\n\n// Lemma: Zero vector satisfies the bounds property\nlemma ZeroVectorBounds(x: Matrix, n: nat)\n  requires |x| > 0\n  requires forall i :: 0 <= i < |x| ==> |x[i]| == |x[0]|\n  requires n == Min(|x|, |x[0]|)\n  ensures forall i :: 0 <= i < n ==> ZeroVector(n)[i] * ZeroVector(n)[i] <= FrobeniusNormSquared(x)\n{\n}\n\n// Lemma: For zero matrix, Frobenius norm squared is 0\nlemma ZeroMatrixFrobeniusNorm(x: Matrix)\n  requires |x| > 0\n  requires forall i :: 0 <= i < |x| ==> |x[i]| == |x[0]|\n  requires IsZeroMatrix(x)\n  ensures FrobeniusNormSquared(x) == 0.0\n{\n}",
+  "{\n  if |x| == 0 {\n    result := [];\n  } else {\n    var n := Min(|x|, |x[0]|);\n    result := ZeroVector(n);\n    ZeroVectorBounds(x, n);\n    if IsZeroMatrix(x) {\n      ZeroMatrixFrobeniusNorm(x);\n    }\n  }\n}"
+]
+--------------------------------------------------------------------------------

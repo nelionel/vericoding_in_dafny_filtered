@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1589 characters
+--------------------------------------------------------------------------------
+```json
+[
+"/* helper modified by LLM (iteration 3): Added trigger to fix compilation warning */\nlemma MaxUpToMonotonic(a: seq<int>, i: int, j: int)\n    requires 0 <= i <= j < |a|\n    ensures max_up_to(a, i) <= max_up_to(a, j)\n    decreases j - i\n{\n    if i < j {\n        MaxUpToMonotonic(a, i, j - 1);\n    }\n}\n\nlemma MaxUpToContains(a: seq<int>, i: int)\n    requires 0 <= i < |a|\n    ensures exists k :: 0 <= k <= i && a[k] == max_up_to(a, i)\n    decreases i\n{\n    if i == 0 {\n        assert a[0] == max_up_to(a, 0);\n    } else {\n        MaxUpToContains(a, i - 1);\n        if a[i] > max_up_to(a, i - 1) {\n            assert a[i] == max_up_to(a, i);\n        } else {\n            assert max_up_to(a, i) == max_up_to(a, i - 1);\n        }\n    }\n}\n\nlemma MaxUpToBound(a: seq<int>, i: int)\n    requires 0 <= i < |a|\n    ensures forall k {:trigger a[k]} :: 0 <= k <= i ==> a[k] <= max_up_to(a, i)\n    decreases i\n{\n    if i > 0 {\n        MaxUpToBound(a, i - 1);\n    }\n}",
+"/* code modified by LLM (iteration 3): Fixed to satisfy postcondition */\n{\n    var canSort := true;\n    var i := 0;\n    while i < n - 1\n        invariant 0 <= i <= n - 1\n        invariant canSort <==> (forall j :: 0 <= j < i ==> (p[j] == '0' ==> max_up_to(a, j) <= j + 1))\n    {\n        if p[i] == '0' {\n            var maxVal := max_up_to(a, i);\n            if maxVal > i + 1 {\n                canSort := false;\n            }\n        }\n        i := i + 1;\n    }\n    \n    if canSort {\n        result := \"YES\";\n    } else {\n        result := \"NO\";\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

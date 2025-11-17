@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1010 characters
+--------------------------------------------------------------------------------
+[
+"/* helper modified by LLM (iteration 3): made PowerNat non-ghost to allow use in executable code */\nfunction PowerNat(base: real, exp: nat): real\n{\n  if exp == 0 then 1.0\n  else if exp == 1 then base\n  else base * PowerNat(base, exp - 1)\n}",
+"{\n  /* code modified by LLM (iteration 3): fixed PowerNat call issue by making it non-ghost */\n  if |c| == 0 {\n    p := [];\n    return;\n  }\n  if |c| == 1 {\n    p := c;\n    return;\n  }\n  if |c| == 2 {\n    p := c;\n    return;\n  }\n  \n  var temp := new real[|c|];\n  var i := 0;\n  while i < |c|\n  {\n    temp[i] := 0.0;\n    i := i + 1;\n  }\n  \n  if |c| >= 1 {\n    temp[0] := c[0];\n  }\n  if |c| >= 2 {\n    temp[1] := c[1];\n  }\n  \n  var k := 2;\n  while k < |c|\n  {\n    var j := 0;\n    while j <= k\n    {\n      if j == k {\n        temp[j] := temp[j] + c[k] * PowerNat(2.0, k - 1);\n      } else if j == k - 2 {\n        temp[j] := temp[j] - c[k];\n      }\n      j := j + 1;\n    }\n    k := k + 1;\n  }\n  \n  p := temp[..];\n}"
+]
+--------------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 455 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  result := 1;\n  var i := 1;\n  while i <= n\n    invariant 1 <= i <= n + 1\n    invariant result >= 1\n    invariant result == MaxProductOfDigitsInRange(i - 1)\n    invariant forall k :: 1 <= k < i ==> ProductOfDigits(k) <= result\n    invariant exists k :: 1 <= k < i && ProductOfDigits(k) == result\n  {\n    var current := ProductOfDigits(i);\n    if current > result {\n      result := current;\n    }\n    i := i + 1;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 563 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function abs(x: real): real\n{\n  if x >= 0.0 then x else -x\n}\n\nfunction computeArctan(x: real): real\n{\n  if x == 0.0 then 0.0\n  else if abs(x - 1.0) < 0.0000000001 then PI_QUARTER\n  else if abs(x - (-1.0)) < 0.0000000001 then -PI_QUARTER\n  else if x > 10.0 then 1.5\n  else if x < -10.0 then -1.5\n  else if abs(x) < 0.1 then x\n  else if x > 0.0 then PI_QUARTER + (x - 1.0) / (1.0 + x * x) * 0.5\n  else -PI_QUARTER + (x + 1.0) / (1.0 + x * x) * 0.5\n}",
+  "{\n  result := seq(|x|, i requires 0 <= i < |x| => computeArctan(x[i]));\n}"
+]
+```
+--------------------------------------------------------------------------------

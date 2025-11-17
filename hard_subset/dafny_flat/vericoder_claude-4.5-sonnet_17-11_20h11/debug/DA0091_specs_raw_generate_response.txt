@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1366 characters
+--------------------------------------------------------------------------------
+[
+  "",
+  "{\n  result := 0;\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant result >= 0\n    invariant forall k, l :: 0 <= k < i && k < l < i ==> checkPairFunc(seals[k], seals[l], a, b) <= result\n    invariant result == 0 ==> (forall k, l :: 0 <= k < i && k < l < i ==> checkPairFunc(seals[k], seals[l], a, b) == 0)\n    invariant result > 0 ==> (exists k, l :: 0 <= k < i && k < l < i && checkPairFunc(seals[k], seals[l], a, b) == result)\n  {\n    var j := i + 1;\n    while j < n\n      invariant i < j <= n\n      invariant result >= 0\n      invariant forall k, l :: 0 <= k < i && k < l < i ==> checkPairFunc(seals[k], seals[l], a, b) <= result\n      invariant forall l :: i < l < j ==> checkPairFunc(seals[i], seals[l], a, b) <= result\n      invariant result == 0 ==> (forall k, l :: 0 <= k < i && k < l < i ==> checkPairFunc(seals[k], seals[l], a, b) == 0) && (forall l :: i < l < j ==> checkPairFunc(seals[i], seals[l], a, b) == 0)\n      invariant result > 0 ==> (exists k, l :: (0 <= k < i && k < l < i && checkPairFunc(seals[k], seals[l], a, b) == result) || (k == i && i < l < j && checkPairFunc(seals[i], seals[l], a, b) == result))\n    {\n      var pairArea := checkPairFunc(seals[i], seals[j], a, b);\n      if pairArea > result {\n        result := pairArea;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

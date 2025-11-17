@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1378 characters
+--------------------------------------------------------------------------------
+[
+"function countMonotonic(n: int, m: int, target1: int, target2: int): ()\n  requires n >= 1 && m >= 1 && target1 >= 0 && target2 >= 0\n  requires target1 <= target2\n  ensures countLessOrEqualValue(n, m, target1) <= countLessOrEqualValue(n, m, target2)\n{\n  if target1 <= 0 && target2 <= 0 then ()\n  else if target1 <= 0 && target2 > 0 then ()\n  else if target2 >= n * m then ()\n  else if target1 >= n * m then ()\n  else ()\n}\n\nlemma countLessOrEqualBounds(n: int, m: int, target: int)\n  requires n >= 1 && m >= 1 && target >= 1\n  ensures target >= n * m ==> countLessOrEqualValue(n, m, target) == n * m\n  ensures target == 1 ==> countLessOrEqualValue(n, m, target) <= 1\n{\n}\n\nlemma countIncrease(n: int, m: int, target: int)\n  requires n >= 1 && m >= 1 && target >= 1\n  ensures countLessOrEqualValue(n, m, target) < countLessOrEqualValue(n, m, target + 1) || countLessOrEqualValue(n, m, target) == n * m\n{\n}",
+"{\n  var low := 1;\n  var high := n * m;\n  \n  while low < high\n    invariant 1 <= low <= high <= n * m\n    invariant countLessOrEqualValue(n, m, high) >= k\n    invariant low == 1 || countLessOrEqualValue(n, m, low - 1) < k\n  {\n    var mid := low + (high - low) / 2;\n    var count := countLessOrEqualValue(n, m, mid);\n    \n    if count < k {\n      low := mid + 1;\n    } else {\n      high := mid;\n    }\n  }\n  \n  result := low;\n}"
+]
+--------------------------------------------------------------------------------

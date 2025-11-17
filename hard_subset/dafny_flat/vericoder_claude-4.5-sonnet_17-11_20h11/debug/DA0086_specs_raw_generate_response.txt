@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 651 characters
+--------------------------------------------------------------------------------
+[
+"function sum(cards: seq<int>): int\n{\n    if |cards| == 0 then 0 else cards[0] + sum(cards[1..])\n}\n\nfunction minPossibleSumUpToIndex(cards: seq<int>, n: int): int\n    requires ValidInput(cards)\n    requires 0 <= n <= 5\n    ensures minPossibleSumUpToIndex(cards, n) >= 0\n    decreases n\n{\n    if n == 0 then 0\n    else if n == 1 then cards[0]\n    else\n        var prev := minPossibleSumUpToIndex(cards, n - 1);\n        var includeCurrent := prev + cards[n - 1];\n        var skipCurrent := prev;\n        if includeCurrent < skipCurrent then includeCurrent else skipCurrent\n}",
+"{\n  result := minPossibleSumUpToIndex(cards, 5);\n}"
+]
+--------------------------------------------------------------------------------

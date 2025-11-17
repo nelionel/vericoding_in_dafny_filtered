@@ -121,6 +121,11 @@ Each model run gets its own timestamped folder under `eval_results/` with:
 - `_impl.dfy` files – LLM completions that verified successfully
 - optional `debug/` artifacts when `--verbose` is set
 
+### Notes on Qwen "thinking" models
+
+- When using `qwen/qwen3-30b-a3b-thinking-2507` through OpenRouter we observed that no intermediate “thinking tokens” are surfaced in the response payloads—the hosted API simply adds latency before returning the final JSON array. This means the harness can only consume the completion content, not the private reasoning stream.
+- The JSON decoder in `clean_eval` now walks every candidate `[` in the raw response and decodes the *last* valid JSON array, which fixes the earlier issue where bracketed math (`[0..|s|-1]`) in the model’s prose was misinterpreted as the replacement payload.
+
 ## Extending / testing
 
 - The vendored modules remain untouched except for two small hooks:

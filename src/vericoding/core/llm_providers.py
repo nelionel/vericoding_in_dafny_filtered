@@ -2,6 +2,10 @@
 
 import os
 import threading
+import csv
+import hashlib
+from pathlib import Path
+from datetime import datetime, timezone
 from abc import ABC, abstractmethod
 from time import time, sleep
 from dataclasses import dataclass
@@ -536,6 +540,7 @@ def create_llm_provider(llm_name: str) -> tuple[LLMProvider, str]:
 # Global token counter for tracking across all calls (thread-safe)
 _global_token_stats = {"input_tokens": 0, "output_tokens": 0, "total_calls": 0}
 _token_stats_lock = threading.Lock()
+_token_log_lock = threading.Lock()
 
 # Global step counter for W&B logging (step = 1 API call)
 _global_step_counter = {"step": 0, "problems_processed": 0}
@@ -574,6 +579,52 @@ def reset_global_token_stats():
         _global_token_stats["input_tokens"] = 0
         _global_token_stats["output_tokens"] = 0
         _global_token_stats["total_calls"] = 0
+
+
+def _maybe_log_token_usage(
+    *,
+    step: int,
+    config: ProcessingConfig,
+    provider: LLMProvider,
+    llm_response: LLMResponse,
+    llm_duration_sec: float,
+    cost_usd: float,
+    prompt: str,
+) -> None:
+    """Optionally append per-call token usage to CSV defined by VERICODING_TOKEN_LOG."""
+    token_log_path = os.getenv("VERICODING_TOKEN_LOG")
+    if not token_log_path:
+        return
+
+    path = Path(token_log_path)
+    record = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "step": step,
+        "model_alias": getattr(config, "llm", ""),
+        "provider_model": getattr(provider, "model", ""),
+        "language": getattr(config, "language", ""),
+        "output_dir": getattr(config, "output_dir", ""),
+        "input_tokens": llm_response.input_tokens,
+        "output_tokens": llm_response.output_tokens,
+        "total_tokens": llm_response.input_tokens + llm_response.output_tokens,
+        "llm_duration_sec": llm_duration_sec,
+        "cost_usd": cost_usd,
+        "prompt_chars": len(prompt),
+        "prompt_hash": hashlib.md5(prompt.encode("utf-8")).hexdigest(),
+        "max_tokens": getattr(provider, "max_tokens", ""),
+        "rate_limit_rpm": getattr(config, "rate_limit_requests_per_minute", ""),
+        "use_dynamic_rate_limit": getattr(config, "use_dynamic_rate_limit", ""),
+    }
+
+    fieldnames = list(record.keys())
+    with _token_log_lock:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        file_exists = path.exists()
+        with path.open("a", newline="") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(record)
 
 
 _RATE_LIMIT_MAX_RETRIES = int(os.getenv("VERICODING_RATE_LIMIT_MAX_RETRIES", "5"))
@@ -648,6 +699,16 @@ def call_llm_detailed(
     # Increment step counter (step = 1 successful API call)
     current_step = increment_step()
     problems_so_far = get_problems_processed()
+
+    _maybe_log_token_usage(
+        step=current_step,
+        config=config,
+        provider=provider,
+        llm_response=llm_response,
+        llm_duration_sec=llm_duration_sec,
+        cost_usd=cost_usd,
+        prompt=prompt,
+    )
 
     if wandb and hasattr(wandb, "log") and hasattr(wandb, "run") and wandb.run:
         try:

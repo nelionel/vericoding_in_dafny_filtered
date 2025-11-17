@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 178 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  result := y + 1;\n  while !HasDistinctDigits(result)\n    invariant result > y\n    decreases 9876 - result\n  {\n    result := result + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

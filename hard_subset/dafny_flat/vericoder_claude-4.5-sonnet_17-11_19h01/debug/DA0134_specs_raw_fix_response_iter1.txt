@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 395 characters
+--------------------------------------------------------------------------------
+```json
+[
+"",
+"{\n  /* code modified by LLM (iteration 2): fixed decreases clause to use proper metric */\n  var candidate := n + 1;\n  while candidate % k != 0\n    invariant candidate > n\n    invariant forall x :: n < x < candidate ==> x % k != 0\n    decreases if candidate % k == 0 then 0 else k - (candidate % k)\n  {\n    candidate := candidate + 1;\n  }\n  result := candidate;\n}"
+]
+```
+--------------------------------------------------------------------------------

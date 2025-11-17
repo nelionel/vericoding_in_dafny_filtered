@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 976 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function simulateTrainsHelper(n: int, a: int, x: int, b: int, y: int, fuel: int): bool\nrequires n >= 4 && 1 <= a <= n && 1 <= x <= n && 1 <= b <= n && 1 <= y <= n\nrequires a != x && a != b && a != y && x != b && x != y && b != y\nrequires fuel >= 0\ndecreases fuel\n{\n  if fuel == 0 then false\n  else if a == b then true\n  else\n    var next_a := if a == n then 1 else a + 1;\n    var next_b := if b == 1 then n else b - 1;\n    if next_a == x && next_b == y then false\n    else if next_a == next_b then true\n    else simulateTrainsHelper(n, next_a, x, next_b, y, fuel - 1)\n}",
+  "{\n  var parts := parseInput(stdin_input);\n  var n := parts[0];\n  var a := parts[1];\n  var x := parts[2];\n  var b := parts[3];\n  var y := parts[4];\n  \n  if a == b {\n    result := \"YES\\n\";\n  } else {\n    var willMeet := simulateTrains(n, a, x, b, y);\n    if willMeet {\n      result := \"YES\\n\";\n    } else {\n      result := \"NO\\n\";\n    }\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1186 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma MaxUpToMonotonic(a: seq<int>, i: int, j: int)\n    requires 0 <= i <= j < |a|\n    ensures max_up_to(a, i) <= max_up_to(a, j)\n    decreases j - i\n{\n    if i < j {\n        MaxUpToMonotonic(a, i, j - 1);\n    }\n}\n\nlemma MaxUpToContains(a: seq<int>, i: int)\n    requires 0 <= i < |a|\n    ensures exists k :: 0 <= k <= i && a[k] == max_up_to(a, i)\n    decreases i\n{\n    if i > 0 {\n        MaxUpToContains(a, i - 1);\n    }\n}\n\nlemma MaxUpToBound(a: seq<int>, i: int)\n    requires 0 <= i < |a|\n    ensures forall k :: 0 <= k <= i ==> a[k] <= max_up_to(a, i)\n    decreases i\n{\n    if i > 0 {\n        MaxUpToBound(a, i - 1);\n    }\n}",
+  "{\n    var canSort := true;\n    var i := 0;\n    while i < n - 1\n        invariant 0 <= i <= n - 1\n        invariant canSort <==> (forall j :: 0 <= j < i ==> (p[j] == '0' ==> max_up_to(a, j) <= j + 1))\n    {\n        if p[i] == '0' {\n            var maxVal := max_up_to(a, i);\n            if maxVal > i + 1 {\n                canSort := false;\n            }\n        }\n        i := i + 1;\n    }\n    \n    if canSort {\n        result := \"YES\";\n    } else {\n        result := \"NO\";\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

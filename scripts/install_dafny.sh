@@ -274,7 +274,7 @@ method Main() {
   print "Hello, Dafny!\n";
 }
 EOF
-  dafny /tmp/dafny_hello.dfy >/dev/null
+  dafny verify /tmp/dafny_hello.dfy >/dev/null
   rm -f /tmp/dafny_hello.dfy
 
   cat > /tmp/dafny_sum.dfy << 'EOF'
@@ -292,7 +292,7 @@ method Sum(n: nat) returns (s: nat)
   }
 }
 EOF
-  dafny /tmp/dafny_sum.dfy >/dev/null
+  dafny verify /tmp/dafny_sum.dfy >/dev/null
   rm -f /tmp/dafny_sum.dfy
 
   log "Dafny installation complete!"

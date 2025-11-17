@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 351 characters
+--------------------------------------------------------------------------------
+[
+  "",
+  "{\n  /* code modified by LLM (iteration 3): use iterative implementation instead of recursion */\n  result := a;\n  var i := a + 1;\n  while i <= b\n    invariant a < i <= b + 1\n    invariant result == XorRange(a, i - 1)\n    invariant result >= 0\n    decreases b - i + 1\n  {\n    result := XorInt(result, i);\n    i := i + 1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

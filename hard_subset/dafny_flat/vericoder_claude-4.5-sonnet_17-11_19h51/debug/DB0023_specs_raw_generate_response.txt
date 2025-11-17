@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 458 characters
+--------------------------------------------------------------------------------
+[
+"",
+"{\n  if sy == \"0\" {\n    res := \"1\";\n  } else {\n    var quotient, remainder := DivMod(sy, \"10\");\n    var temp := ModExp(sx, quotient, sz);\n    var temp2 := ModExpPow2(temp, \"10\", 1, sz);\n    if remainder == \"0\" {\n      res := temp2;\n    } else {\n      var sx_mod := DivMod(sx, sz).1;\n      var temp3 := ModExpPow2(sx_mod, \"1\", 0, sz);\n      var product := Add(temp2, temp3);\n      res := DivMod(product, sz).1;\n    }\n  }\n}"
+]
+--------------------------------------------------------------------------------

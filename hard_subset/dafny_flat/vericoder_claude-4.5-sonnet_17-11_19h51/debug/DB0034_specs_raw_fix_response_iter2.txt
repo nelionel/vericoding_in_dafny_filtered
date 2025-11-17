@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1698 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 3): Simplified lemmas to avoid timeouts */\nlemma ExpMulMod(a: nat, b: nat, n: nat)\n  requires n > 0\n  ensures (a * b) % n == ((a % n) * (b % n)) % n\n{\n}\n\nlemma ExpAddExponent(base: nat, e1: nat, e2: nat)\n  ensures Exp_int(base, e1 + e2) == Exp_int(base, e1) * Exp_int(base, e2)\n  decreases e2\n{\n  if e2 == 0 {\n  } else {\n    ExpAddExponent(base, e1, e2 - 1);\n  }\n}\n\nlemma ExpDoubleExponent(base: nat, e: nat)\n  ensures Exp_int(base, 2 * e) == Exp_int(Exp_int(base, 2), e)\n  decreases e\n{\n  if e == 0 {\n  } else {\n    ExpAddExponent(base, e, e);\n    ExpDoubleExponent(base, e - 1);\n  }\n}\n\nlemma ModProperty(a: nat, b: nat, n: nat)\n  requires n > 0\n  ensures (a % n * b % n) % n == (a * b) % n\n{\n}",
+  "{\n  /* code modified by LLM (iteration 3): Simplified approach using direct axiom-free implementation */\n  var n := Str2Int(sz);\n  \n  if |sy| == 1 && sy[0] == '0' {\n    res := \"1\";\n    return;\n  }\n  \n  var last := sy[|sy| - 1];\n  var sy_prefix := sy[0..|sy| - 1];\n  \n  if |sy_prefix| == 0 {\n    res := sx;\n    return;\n  }\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  var squared := Mul(rec_res, rec_res);\n  \n  var y := Str2Int(sy);\n  var y_half := Str2Int(sy_prefix);\n  \n  if last == '0' {\n    ExpDoubleExponent(Str2Int(sx), y_half);\n    ModProperty(Exp_int(Str2Int(sx), y_half), Exp_int(Str2Int(sx), y_half), n);\n    res := squared;\n  } else {\n    var temp := Mul(squared, sx);\n    ExpAddExponent(Str2Int(sx), 2 * y_half, 1);\n    ExpDoubleExponent(Str2Int(sx), y_half);\n    ModProperty(Exp_int(Exp_int(Str2Int(sx), 2), y_half), Str2Int(sx), n);\n    res := temp;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

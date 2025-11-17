@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 357 characters
+--------------------------------------------------------------------------------
+[
+"",
+"{\n  /* code modified by LLM (iteration 3): changed decreases clause to measure distance to termination */\n  result := n;\n  while SocksAfterDay(n, m, result) > 0\n    invariant result >= n\n    invariant forall k :: 1 <= k < result ==> SocksAfterDay(n, m, k) > 0\n    decreases SocksAfterDay(n, m, result)\n  {\n    result := result + 1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

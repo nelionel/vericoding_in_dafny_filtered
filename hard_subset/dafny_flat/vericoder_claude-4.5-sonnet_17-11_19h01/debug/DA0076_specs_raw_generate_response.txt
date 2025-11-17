@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1868 characters
+--------------------------------------------------------------------------------
+```json
+[
+"function max(a: int, b: int): int { if a > b then a else b }\n\nfunction computeSchedule(a: seq<int>, k: int, i: int): seq<int>\n  requires |a| > 0\n  requires 0 <= i <= |a|\n  decreases |a| - i\n{\n  if i == 0 then\n    if |a| == 1 then a else [max(a[0], k - a[1])] + computeSchedule(a, k, 1)\n  else if i == |a| then\n    []\n  else if i == |a| - 1 then\n    [max(a[i], k - computeSchedule(a, k, i - 1)[i - 1])]\n  else\n    [max(a[i], k - computeSchedule(a, k, i - 1)[i - 1])] + computeSchedule(a, k, i + 1)\n}\n\nlemma sumDistributive(s1: seq<int>, s2: seq<int>)\n  ensures sum(s1 + s2) == sum(s1) + sum(s2)\n{\n  if |s1| == 0 {\n    assert s1 + s2 == s2;\n  } else {\n    calc {\n      sum(s1 + s2);\n      (s1 + s2)[0] + sum((s1 + s2)[1..]);\n      s1[0] + sum(s1[1..] + s2);\n      { sumDistributive(s1[1..], s2); }\n      s1[0] + sum(s1[1..]) + sum(s2);\n      sum(s1) + sum(s2);\n    }\n  }\n}\n\nlemma sumNonNegative(s: seq<int>)\n  requires forall i :: 0 <= i < |s| ==> s[i] >= 0\n  ensures sum(s) >= 0\n{\n}",
+"{\n  finalSchedule := [];\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant |finalSchedule| == i\n    invariant forall j :: 0 <= j < i ==> finalSchedule[j] >= a[j]\n    invariant forall j :: 0 <= j < i - 1 ==> finalSchedule[j] + finalSchedule[j + 1] >= k\n  {\n    var newVal: int;\n    if i == 0 {\n      if n == 1 {\n        newVal := a[0];\n      } else {\n        newVal := max(a[0], k - a[1]);\n      }\n    } else {\n      newVal := max(a[i], k - finalSchedule[i - 1]);\n    }\n    finalSchedule := finalSchedule + [newVal];\n    i := i + 1;\n  }\n  \n  additionalWalks := 0;\n  i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant additionalWalks == sum(finalSchedule[..i]) - sum(a[..i])\n  {\n    additionalWalks := additionalWalks + (finalSchedule[i] - a[i]);\n    i := i + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

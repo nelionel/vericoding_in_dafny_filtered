@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 457 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var minDim := if m <= n then m else n;\n  \n  U := IdentityMatrix(m);\n  if m > minDim {\n    U := seq(m, i requires 0 <= i < m =>\n      seq(minDim, j requires 0 <= j < minDim => if i == j then 1.0 else 0.0));\n  }\n  \n  S := seq(minDim, i => 0.0);\n  \n  Vh := IdentityMatrix(n);\n  if n > minDim {\n    Vh := seq(minDim, i requires 0 <= i < minDim =>\n      seq(n, j requires 0 <= j < n => if i == j then 1.0 else 0.0));\n  }\n}"]
+```
+--------------------------------------------------------------------------------

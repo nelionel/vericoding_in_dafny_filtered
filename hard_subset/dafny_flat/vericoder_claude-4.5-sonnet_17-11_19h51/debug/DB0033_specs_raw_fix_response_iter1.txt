@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 633 characters
+--------------------------------------------------------------------------------
+[
+  "/* helper modified by LLM (iteration 2): removed timeout-causing lemma, simplified approach */",
+  "/* code modified by LLM (iteration 2): handle base case properly and ensure preconditions */\n{\n  if sy == \"0\" {\n    res := \"1\";\n    return;\n  }\n  \n  if |sy| == 1 {\n    var temp := Mul(sx, \"1\");\n    res := temp;\n    return;\n  }\n  \n  var y_last := sy[|sy| - 1];\n  var sy_prefix := sy[0..|sy| - 1];\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  var squared := Mul(rec_res, rec_res);\n  \n  if y_last == '0' {\n    res := squared;\n  } else {\n    var temp := Mul(squared, sx);\n    res := temp;\n  }\n}"
+]
+--------------------------------------------------------------------------------

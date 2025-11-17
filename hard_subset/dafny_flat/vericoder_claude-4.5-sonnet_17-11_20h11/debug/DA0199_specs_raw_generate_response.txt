@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1675 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function DiagSum(pos: (int, int)): int { pos.0 + pos.1 }\n\nfunction DiagDiff(pos: (int, int)): int { pos.0 - pos.1 }\n\nfunction CountPairsOnDiag(positions: seq<(int, int)>, diag: int, isDiagSum: bool): int\n  requires ValidInput(positions)\n{\n  var filtered := if isDiagSum then\n    seq(|positions|, i requires 0 <= i < |positions| => if DiagSum(positions[i]) == diag then 1 else 0)\n  else\n    seq(|positions|, i requires 0 <= i < |positions| => if DiagDiff(positions[i]) == diag then 1 else 0);\n  var count := SumSeq(filtered);\n  count * (count - 1) / 2\n}\n\nfunction SumSeq(s: seq<int>): int\n{\n  if |s| == 0 then 0 else s[0] + SumSeq(s[1..])\n}",
+  "{\n  var diagSumMap: map<int, int> := map[];\n  var diagDiffMap: map<int, int> := map[];\n  \n  var i := 0;\n  while i < |positions|\n  {\n    var dSum := positions[i].0 + positions[i].1;\n    var dDiff := positions[i].0 - positions[i].1;\n    \n    diagSumMap := diagSumMap[dSum := if dSum in diagSumMap then diagSumMap[dSum] + 1 else 1];\n    diagDiffMap := diagDiffMap[dDiff := if dDiff in diagDiffMap then diagDiffMap[dDiff] + 1 else 1];\n    \n    i := i + 1;\n  }\n  \n  result := 0;\n  var sumKeys := diagSumMap.Keys;\n  while sumKeys != {}\n    decreases |sumKeys|\n  {\n    var key :| key in sumKeys;\n    var count := diagSumMap[key];\n    result := result + (count * (count - 1)) / 2;\n    sumKeys := sumKeys - {key};\n  }\n  \n  var diffKeys := diagDiffMap.Keys;\n  while diffKeys != {}\n    decreases |diffKeys|\n  {\n    var key :| key in diffKeys;\n    var count := diagDiffMap[key];\n    result := result + (count * (count - 1)) / 2;\n    diffKeys := diffKeys - {key};\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

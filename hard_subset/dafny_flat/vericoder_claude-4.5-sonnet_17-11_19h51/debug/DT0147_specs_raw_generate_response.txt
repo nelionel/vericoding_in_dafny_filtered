@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1338 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function ComplexSumSeq(s: seq<Complex>): Complex\n{\n  if |s| == 0 then ComplexZero()\n  else ComplexAdd(s[0], ComplexSumSeq(s[1..]))\n}\n\nlemma ComplexSumEquivalence(n: nat, f: nat -> Complex)\n  requires forall j :: 0 <= j < n ==> true\n  ensures ComplexSum(n, f) == ComplexSumSeq(seq(n, f))\n{\n  reveal ComplexSum();\n  if n == 0 {\n  } else {\n    ComplexSumEquivalence(n-1, f);\n  }\n}\n\nfunction DFTElement(a: seq<Complex>, k: nat): Complex\n  requires k < |a|\n{\n  ComplexSum(|a|, (j: nat) requires 0 <= j < |a| => \n    ComplexMul(a[j], ComplexExp(-2.0 * PI * (k as real) * (j as real) / (|a| as real))))\n}\n\nlemma DFTZeroCase(a: seq<Complex>)\n  requires |a| > 0\n  ensures DFTElement(a, 0) == ComplexSum(|a|, (j: nat) requires 0 <= j < |a| => a[j])\n{\n  reveal ComplexSum();\n  assert forall j :: 0 <= j < |a| ==> ComplexExp(-2.0 * PI * 0.0 * (j as real) / (|a| as real)) == ComplexExp(0.0);\n}",
+  "{\n  var n := |a|;\n  result := seq(n, (k: nat) requires 0 <= k < n => DFTElement(a, k));\n  \n  forall k | 0 <= k < n\n    ensures result[k] == ComplexSum(n, (j: nat) requires 0 <= j < n => \n      ComplexMul(a[j], ComplexExp(-2.0 * PI * (k as real) * (j as real) / (n as real))))\n  {\n    assert result[k] == DFTElement(a, k);\n  }\n  \n  DFTZeroCase(a);\n  assert result[0] == DFTElement(a, 0);\n}"
+]
+```
+--------------------------------------------------------------------------------

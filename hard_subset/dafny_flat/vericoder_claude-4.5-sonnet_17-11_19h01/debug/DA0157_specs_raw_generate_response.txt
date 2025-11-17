@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 398 characters
+--------------------------------------------------------------------------------
+[
+"function max(x: int, y: int): int\n{\n  if x > y then x else y\n}",
+"{\n  var area := 6 * n;\n  var dim1 := max(a, b);\n  var dim2 := max(b, a);\n  \n  if dim1 * dim2 >= area {\n    result := [dim1 * dim2, dim1, dim2];\n  } else {\n    var needed := area - dim1 * dim2;\n    var extra := (needed + dim1 - 1) / dim1;\n    dim2 := dim2 + extra;\n    result := [dim1 * dim2, dim1, dim2];\n  }\n}"
+]
+--------------------------------------------------------------------------------

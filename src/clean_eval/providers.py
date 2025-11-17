@@ -20,6 +20,8 @@ def create_provider_for_backend(
     llm_name: str,
     vllm_base_url: str,
     vllm_api_key: str,
+    vllm_max_tokens: int | None = None,
+    vllm_request_timeout: float | None = None,
 ) -> tuple[str, ProviderFactory]:
     """
     Return a tuple of (resolved_model_name, provider_factory) for the requested backend.
@@ -37,10 +39,16 @@ def create_provider_for_backend(
 
     if backend == "vllm":
         def factory() -> tuple[LLMProvider, str]:
+            provider_kwargs = {}
+            if vllm_max_tokens is not None:
+                provider_kwargs["max_tokens"] = vllm_max_tokens
+            if vllm_request_timeout is not None:
+                provider_kwargs["timeout"] = vllm_request_timeout
             provider = VLLMProvider(
                 base_url=vllm_base_url,
                 api_key=vllm_api_key,
                 model=llm_name,
+                **provider_kwargs,
             )
             return provider, llm_name
 

@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1218 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 2): added bound lemma to help prove termination and postconditions */\nlemma BoundLemma(x: int, n: int)\n  requires x > 0\n  requires n > 1\n  requires x * x >= n\n  ensures forall y :: y >= x ==> y * y + digitSum(y) * y >= n\n{\n}\n\nfunction maxSearchBound(n: int): int\n  requires n > 1\n  ensures maxSearchBound(n) > 0\n  ensures maxSearchBound(n) * maxSearchBound(n) >= n\n{\n  var bound := 1;\n  if bound * bound >= n then bound else n\n}",
+  "{\n  /* code modified by LLM (iteration 2): added decreases clause and stronger invariants for verification */\n  if n == 1 {\n    return -1;\n  }\n  \n  var searchBound := maxSearchBound(n);\n  var x := 1;\n  \n  while x * x + digitSum(x) * x < n\n    invariant x >= 1\n    invariant forall y :: 1 <= y < x ==> y * y + digitSum(y) * y < n\n    invariant x <= searchBound + 1\n    decreases searchBound + 1 - x\n  {\n    x := x + 1;\n  }\n  \n  if x * x + digitSum(x) * x == n {\n    return x;\n  } else {\n    assert x * x + digitSum(x) * x > n;\n    assert forall y :: 1 <= y < x ==> y * y + digitSum(y) * y < n;\n    assert forall y :: y >= x ==> y * y >= x * x > n - digitSum(x) * x;\n    return -1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

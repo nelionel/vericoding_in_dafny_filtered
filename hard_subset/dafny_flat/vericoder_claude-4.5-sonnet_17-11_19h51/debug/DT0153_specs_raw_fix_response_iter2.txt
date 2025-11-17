@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1753 characters
+--------------------------------------------------------------------------------
+```json
+[
+"/* helper modified by LLM (iteration 3): fixed preconditions and index bounds */\nfunction GetIFFTTerm(a: seq<Complex>, k: nat, j: nat, n: nat): Complex\n    requires n > 0\n    requires k < n\n    requires j < n\n    requires n <= |a|\n{\n    ComplexMul(a[j], ComplexExp(2.0 * PI * NatToReal(k) * NatToReal(j) / NatToReal(n)))\n}\n\nfunction ComputeIFFTSum(a: seq<Complex>, k: nat, n: nat): Complex\n    requires n > 0\n    requires k < n\n    requires n <= |a|\n    decreases n\n{\n    if n == 0 then Complex(0.0, 0.0)\n    else if n == 1 then GetIFFTTerm(a, k, 0, n)\n    else ComplexAdd(GetIFFTTerm(a, k, n-1, n), ComputeIFFTSum(a, k, n-1))\n}\n\nlemma IFFTSumEquivalence(a: seq<Complex>, k: nat, n: nat)\n    requires n > 0\n    requires k < n\n    requires n <= |a|\n    ensures ComputeIFFTSum(a, k, n) == ComplexSum(n, j => ComplexMul(a[j], ComplexExp(2.0 * PI * NatToReal(k) * NatToReal(j) / NatToReal(n))))\n    decreases n\n{\n    if n == 1 {\n    } else {\n        IFFTSumEquivalence(a, k, n-1);\n    }\n}",
+"{\n    /* code modified by LLM (iteration 3): fixed preconditions for helper calls */\n    var n := |a|;\n    result := [];\n    var i := 0;\n    while i < n\n        invariant 0 <= i <= n\n        invariant |result| == i\n        invariant forall k :: 0 <= k < i ==>\n            result[k] == ComplexScale(1.0 / NatToReal(n),\n                ComplexSum(n, j =>\n                    ComplexMul(a[j],\n                        ComplexExp(2.0 * PI * NatToReal(k) * NatToReal(j) / NatToReal(n)))))\n    {\n        var sum := ComputeIFFTSum(a, i, n);\n        IFFTSumEquivalence(a, i, n);\n        var scaled := ComplexScale(1.0 / NatToReal(n), sum);\n        result := result + [scaled];\n        i := i + 1;\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

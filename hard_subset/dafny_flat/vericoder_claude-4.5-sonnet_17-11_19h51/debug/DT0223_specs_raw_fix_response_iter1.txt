@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1431 characters
+--------------------------------------------------------------------------------
+[
+"function Abs(x: real): real { if x >= 0.0 then x else -x }\n\nfunction Power(base: real, exp: nat): real\n  decreases exp\n{\n  if exp == 0 then 1.0\n  else base * Power(base, exp - 1)\n}\n\nfunction Cofactor(a: seq<seq<real>>, row: nat, col: nat): seq<seq<real>>\n  requires IsSquareMatrix(a)\n  requires |a| > 0\n  requires row < |a|\n  requires col < |a|\n  ensures IsSquareMatrix(Cofactor(a, row, col))\n  ensures |Cofactor(a, row, col)| == |a| - 1\n{\n  var rows := seq(|a| - 1, i requires 0 <= i < |a| - 1 => \n    if i < row then a[i] else a[i + 1]);\n  seq(|a| - 1, i requires 0 <= i < |a| - 1 => \n    seq(|a| - 1, j requires 0 <= j < |a| - 1 => \n      if j < col then rows[i][j] else rows[i][j + 1]))\n}\n\nfunction DetRec(a: seq<seq<real>>, depth: nat): real\n  requires IsSquareMatrix(a)\n  requires depth <= |a|\n  decreases |a| - depth\n{\n  if |a| == 0 then 1.0\n  else if |a| == 1 then a[0][0]\n  else if |a| == 2 then a[0][0] * a[1][1] - a[0][1] * a[1][0]\n  else if depth >= |a| then 0.0\n  else\n    var sign := if depth % 2 == 0 then 1.0 else -1.0;\n    var elem := a[0][depth];\n    var cofactor := Cofactor(a, 0, depth);\n    sign * elem * DetRec(cofactor, 0) + DetRec(a, depth + 1)\n}",
+"{\n  if |a| == 0 {\n    result := 1.0;\n  } else if |a| == 1 {\n    result := a[0][0];\n  } else if |a| == 2 {\n    result := a[0][0] * a[1][1] - a[0][1] * a[1][0];\n  } else {\n    result := DetRec(a, 0);\n  }\n}"
+]
+--------------------------------------------------------------------------------

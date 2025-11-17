@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 352 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  if sy[0] == '0' {\n    var zeros := Zeros(|sy| - 1);\n    var sy_rest := \"0\" + zeros;\n    res := ModExpPow2(sx, sy_rest, |sy| - 1, sz);\n  } else {\n    var sy_rest := sy[1..];\n    if |sy_rest| == 0 {\n      res := sx;\n    } else {\n      var rec_res := ModExp(sx, sy_rest, sz);\n      res := rec_res;\n    }\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

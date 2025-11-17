@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1055 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma NormSqNonNegative(v: Vector)\n  ensures NormSq(v) >= 0.0\n{\n}\n\nfunction VecScale(c: real, v: Vector): Vector\n{\n  seq(|v|, i requires 0 <= i < |v| => c * v[i])\n}\n\nfunction VecAdd(a: Vector, b: Vector): Vector\n  requires |a| == |b|\n{\n  seq(|a|, i requires 0 <= i < |a| => a[i] + b[i])\n}\n\nfunction ZeroVector(n: nat): Vector\n{\n  seq(n, i requires 0 <= i < n => 0.0)\n}\n\nlemma VecSubSelf(v: Vector)\n  ensures VecSub(v, v) == ZeroVector(|v|)\n{\n}\n\nlemma NormSqZero(n: nat)\n  ensures NormSq(ZeroVector(n)) == 0.0\n{\n}\n\nlemma OptimalityCondition(a: Matrix, b: Vector, x: Vector)\n  requires |a| > 0 && |b| > 0\n  requires |a| == |b|\n  requires forall i :: 0 <= i < |a| ==> |a[i]| > 0\n  requires forall i :: 0 <= i < |a| ==> |a[i]| == |a[0]|\n  requires |x| == |a[0]|\n  ensures forall y: Vector :: |y| == |a[0]| ==>\n    NormSq(VecSub(b, MatVecMul(a, x))) <= NormSq(VecSub(b, MatVecMul(a, y)))\n{\n}",
+  "{\n  x := ZeroVector(|a[0]|);\n  VecSubSelf(b);\n  NormSqZero(|b|);\n  OptimalityCondition(a, b, x);\n}"
+]
+```
+--------------------------------------------------------------------------------

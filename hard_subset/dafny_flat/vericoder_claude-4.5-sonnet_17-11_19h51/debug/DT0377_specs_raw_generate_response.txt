@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1810 characters
+--------------------------------------------------------------------------------
+```json
+[
+"ghost function PolyCoeff(c: seq<real>, degree: nat): real\n{\n  if degree >= |c| then 0.0\n  else SumChebyshevContribution(c, degree, 0)\n}\n\nghost function SumChebyshevContribution(c: seq<real>, degree: nat, k: nat): real\n{\n  if k >= |c| then 0.0\n  else ChebyshevCoefficient(k, degree) * c[k] + SumChebyshevContribution(c, degree, k + 1)\n}\n\nghost function ChebyshevCoefficient(k: nat, degree: nat): real\n{\n  if k == 0 then (if degree == 0 then 1.0 else 0.0)\n  else if k == 1 then (if degree == 1 then 1.0 else 0.0)\n  else if degree == 0 then (if k % 2 == 0 then Power(-1.0, k / 2) else 0.0)\n  else if degree > k then 0.0\n  else if degree == k then Power(2.0, (k - 1) as real)\n  else ChebyshevRecurrence(k, degree)\n}\n\nghost function ChebyshevRecurrence(k: nat, degree: nat): real\n  requires k >= 2\n{\n  if degree == 0 && k % 2 == 0 then Power(-1.0, k / 2)\n  else if degree == k then Power(2.0, (k - 1) as real)\n  else if degree > k then 0.0\n  else 0.0\n}\n\nghost function Power(base: real, exp: real): real\n{\n  if exp == 0.0 then 1.0\n  else if exp == 1.0 then base\n  else if exp == 2.0 then base * base\n  else base * Power(base, exp - 1.0)\n}",
+"{\n  if |c| == 0 {\n    p := [];\n    return;\n  }\n  if |c| == 1 {\n    p := c;\n    return;\n  }\n  if |c| == 2 {\n    p := c;\n    return;\n  }\n  \n  p := new real[|c|];\n  var i := 0;\n  while i < |c|\n  {\n    p[i] := 0.0;\n    i := i + 1;\n  }\n  \n  if |c| >= 1 {\n    p[0] := c[0];\n  }\n  if |c| >= 2 {\n    p[1] := c[1];\n  }\n  \n  var k := 2;\n  while k < |c|\n  {\n    var j := 0;\n    while j <= k\n    {\n      if j == k {\n        p[j] := p[j] + c[k] * Power(2.0, (k - 1) as real);\n      } else if j == k - 2 {\n        p[j] := p[j] - c[k];\n      }\n      j := j + 1;\n    }\n    k := k + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

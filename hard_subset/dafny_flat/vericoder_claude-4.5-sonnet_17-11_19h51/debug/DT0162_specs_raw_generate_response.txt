@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 856 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var m := |input| - 1;\n  var n := |input[0]| - 1;\n  var numRows := |input|;\n  var numCols := n / 2 + 1;\n  \n  result := [];\n  var k := 0;\n  while k < numRows\n    invariant 0 <= k <= numRows\n    invariant |result| == k\n    invariant forall i :: 0 <= i < k ==> |result[i]| == numCols\n    invariant forall i, j :: 0 <= i < k && 0 <= j < |result[i]| ==>\n      result[i][j] == Rfft2Element(input, m, n, i, j)\n  {\n    var row: seq<Complex> := [];\n    var l := 0;\n    while l < numCols\n      invariant 0 <= l <= numCols\n      invariant |row| == l\n      invariant forall j :: 0 <= j < l ==>\n        row[j] == Rfft2Element(input, m, n, k, j)\n    {\n      var element := Rfft2Element(input, m, n, k, l);\n      row := row + [element];\n      l := l + 1;\n    }\n    result := result + [row];\n    k := k + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

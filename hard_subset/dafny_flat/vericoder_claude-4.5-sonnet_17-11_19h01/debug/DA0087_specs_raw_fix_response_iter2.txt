@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 803 characters
+--------------------------------------------------------------------------------
+[
+  "/* helper modified by LLM (iteration 3): adds bound function for termination */\nfunction computeValue(x: int): int\n  requires x >= 0\n{\n  x * x + digitSum(x) * x\n}",
+  "{\n  /* code modified by LLM (iteration 3): fixed loop invariant to hold on entry */\n  if n == 1 {\n    return -1;\n  }\n  \n  var x := 1;\n  var upperBound := n;\n  \n  while x < upperBound && x * x + digitSum(x) * x < n\n    invariant x >= 1\n    invariant forall y :: 1 <= y < x ==> y * y + digitSum(y) * y != n\n    invariant x >= upperBound || x * x + digitSum(x) * x < n\n    decreases upperBound - x\n  {\n    x := x + 1;\n  }\n  \n  if x < upperBound && x * x + digitSum(x) * x == n {\n    return x;\n  } else {\n    assert forall y :: 1 <= y < upperBound ==> y * y + digitSum(y) * y != n;\n    return -1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

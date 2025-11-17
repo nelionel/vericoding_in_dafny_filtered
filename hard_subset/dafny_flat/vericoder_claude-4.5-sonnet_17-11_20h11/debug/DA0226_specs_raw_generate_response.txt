@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1280 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma CandiesUsedMonotonic(x: int, d: int, k: int)\n    requires x >= 1 && d >= 1 && k >= 2\n    ensures CandiesUsed(x, d, k) >= x * d\n{\n    assert CandiesUsed(x, d, k) == x * ((d - 1) * k + 1);\n    assert (d - 1) * k + 1 >= (d - 1) * 2 + 1;\n    assert (d - 1) * 2 + 1 == 2 * d - 1 >= d;\n}\n\nlemma Person1CandiesMonotonic(x1: int, d1: int, x2: int, d2: int)\n    requires x1 <= x2 && d1 <= d2\n    ensures Person1Candies(x1, d1) <= Person1Candies(x2, d2)\n{\n}",
+  "{\n    result := 0;\n    var x := 1;\n    while x <= M\n        invariant 1 <= x <= M + 1\n        invariant result >= 0\n        invariant result <= M * D\n        invariant forall x0: int, d0: int :: x0 < x && ValidDistribution(x0, d0, n, k, M, D) ==> Person1Candies(x0, d0) <= result\n    {\n        var d := 1;\n        while d <= D\n            invariant 1 <= d <= D + 1\n            invariant forall d0: int :: d0 < d && ValidDistribution(x, d0, n, k, M, D) ==> Person1Candies(x, d0) <= result\n        {\n            if CandiesUsed(x, d, k) <= n {\n                var candies := Person1Candies(x, d);\n                if candies > result {\n                    result := candies;\n                }\n            }\n            d := d + 1;\n        }\n        x := x + 1;\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

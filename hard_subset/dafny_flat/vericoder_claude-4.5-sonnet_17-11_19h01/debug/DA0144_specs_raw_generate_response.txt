@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 313 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var minMoves := MinMoves(n);\n  var k := minMoves;\n  \n  while k <= n\n    invariant minMoves <= k <= n + 1\n    invariant forall i :: minMoves <= i < k ==> i % m != 0\n  {\n    if k % m == 0 {\n      result := k;\n      return;\n    }\n    k := k + 1;\n  }\n  \n  result := -1;\n}"
+]
+```
+--------------------------------------------------------------------------------

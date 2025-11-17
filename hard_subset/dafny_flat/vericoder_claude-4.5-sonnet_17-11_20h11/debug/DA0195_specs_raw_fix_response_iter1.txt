@@ -1,0 +1,7 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 378 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  /* code modified by LLM (iteration 2): added upper bound invariant and bounds check */\n  result := y + 1;\n  while result <= 9876 && !HasDistinctDigits(result)\n    invariant result > y\n    invariant result <= 9877\n    invariant forall n :: y < n < result ==> !HasDistinctDigits(n)\n    decreases 9876 - result\n  {\n    result := result + 1;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

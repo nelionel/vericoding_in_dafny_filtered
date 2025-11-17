@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 555 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var i := 0;\n  var allGroup1 := true;\n  var allGroup2 := true;\n  \n  while i < |word|\n    invariant 0 <= i <= |word|\n    invariant allGroup1 ==> forall j :: 0 <= j < i ==> word[j] in Group1()\n    invariant allGroup2 ==> forall j :: 0 <= j < i ==> word[j] in Group2()\n  {\n    if word[i] !in Group1() {\n      allGroup1 := false;\n    }\n    if word[i] !in Group2() {\n      allGroup2 := false;\n    }\n    i := i + 1;\n  }\n  \n  if allGroup1 || allGroup2 {\n    result := \"YES\";\n  } else {\n    result := \"NO\";\n  }\n}"]
+```
+--------------------------------------------------------------------------------

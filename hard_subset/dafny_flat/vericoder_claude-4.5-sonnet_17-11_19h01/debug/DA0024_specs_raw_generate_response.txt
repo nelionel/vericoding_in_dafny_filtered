@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 575 characters
+--------------------------------------------------------------------------------
+```json
+[
+"function gcd(a: int, b: int): int\n    requires a > 0 && b > 0\n    ensures gcd(a, b) > 0\n    ensures a % gcd(a, b) == 0\n    ensures b % gcd(a, b) == 0\n    decreases b\n{\n    if b == 0 then a else gcd(b, a % b)\n}\n\nfunction lcm(a: int, b: int): int\n    requires a > 0 && b > 0\n    ensures lcm(a, b) > 0\n    ensures lcm(a, b) % a == 0\n    ensures lcm(a, b) % b == 0\n    ensures forall m :: m > 0 && m % a == 0 && m % b == 0 ==> lcm(a, b) <= m\n{\n    (a * b) / gcd(a, b)\n}",
+"{\n    var tenPowK := power(10, k);\n    result := lcm(n, tenPowK);\n}"
+]
+```
+--------------------------------------------------------------------------------

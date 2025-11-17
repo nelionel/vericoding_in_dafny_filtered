@@ -1,0 +1,85 @@
+=== DAFNY SPECIFICATION-TO-CODE PROCESSING SUMMARY (PARALLEL VERSION) ===
+
+Language: Dafny
+LLM: claude-4.5-sonnet
+Test directory: /workspace/vericoding_in_dafny_filtered/hard_subset/dafny_flat/difficulty2_50_for_eval
+Output directory: /workspace/vericoding_in_dafny_filtered/hard_subset/dafny_flat/vericoder_claude-4.5-sonnet_17-11_20h11
+Max iterations: 3
+Parallel workers: 4
+Test date: 2025-11-17T20:23:03.342154
+
+Total original files: 50
+
+=== OVERALL STATISTICS ===
+Total successful: 15
+Total failed: 35
+Success rate: 30.0%
+
+=== SUCCESSFUL FILES (VERIFIED) ===
+✓ DA0016_specs.dfy -> DA0016_specs_impl.dfy
+✓ DA0031_specs.dfy -> DA0031_specs_impl.dfy
+✓ DA0034_specs.dfy -> DA0034_specs_impl.dfy
+✓ DA0045_specs.dfy -> DA0045_specs_impl.dfy
+✓ DA0047_specs.dfy -> DA0047_specs_impl.dfy
+✓ DA0054_specs.dfy -> DA0054_specs_impl.dfy
+✓ DA0086_specs.dfy -> DA0086_specs_impl.dfy
+✓ DA0107_specs.dfy -> DA0107_specs_impl.dfy
+✓ DA0130_specs.dfy -> DA0130_specs_impl.dfy
+✓ DA0144_specs.dfy -> DA0144_specs_impl.dfy
+✓ DA0146_specs.dfy -> DA0146_specs_impl.dfy
+✓ DA0182_specs.dfy -> DA0182_specs_impl.dfy
+✓ DA0157_specs.dfy -> DA0157_specs_impl.dfy
+✓ DA0219_specs.dfy -> DA0219_specs_impl.dfy
+✓ DA0256_specs.dfy -> DA0256_specs_impl.dfy
+
+=== FAILED FILES (VERIFICATION) ===
+✗ DA0011_specs.dfy
+✗ DA0007_specs.dfy
+✗ DA0000_specs.dfy
+✗ DA0008_specs.dfy
+✗ DA0013_specs.dfy
+✗ DA0032_specs.dfy
+✗ DA0014_specs.dfy
+✗ DA0038_specs.dfy
+✗ DA0024_specs.dfy
+✗ DA0058_specs.dfy
+✗ DA0061_specs.dfy
+✗ DA0062_specs.dfy
+✗ DA0052_specs.dfy
+✗ DA0076_specs.dfy
+✗ DA0051_specs.dfy
+✗ DA0092_specs.dfy
+✗ DA0131_specs.dfy
+✗ DA0091_specs.dfy
+✗ DA0087_specs.dfy
+✗ DA0139_specs.dfy
+✗ DA0147_specs.dfy
+✗ DA0158_specs.dfy
+✗ DA0191_specs.dfy
+✗ DA0195_specs.dfy
+✗ DA0150_specs.dfy
+✗ DA0217_specs.dfy
+✗ DA0192_specs.dfy
+✗ DA0205_specs.dfy
+✗ DA0199_specs.dfy
+✗ DA0226_specs.dfy
+✗ DA0235_specs.dfy
+✗ DA0220_specs.dfy
+✗ DA0231_specs.dfy
+✗ DA0247_specs.dfy
+✗ DA0254_specs.dfy
+
+=== PARALLEL PROCESSING FEATURES ===
+Parallel workers: 4
+API rate limiting: 1s between calls
+Debug mode: Enabled
+- Saves original specification as *_iter_0_original.dfy
+- Saves initial generated code as *_iter_1_generated.dfy
+- Saves current working version for each iteration as *_iter_N_current.dfy
+- Saves final implementation as *_impl.dfy
+- Full debugging: all intermediate files are saved
+
+- Debug mode control: Enabled
+- Configurable file output based on debug setting
+
+Generated on: 2025-11-17T20:23:03.342830

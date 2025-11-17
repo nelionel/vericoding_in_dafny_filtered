@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1906 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma CapacityMonotonic(n1: int, n2: int, k: int, b: int, v: int)\n    requires n1 >= 0 && n2 >= n1\n    ensures BoxCapacity(n1, k, b, v) <= BoxCapacity(n2, k, b, v)\n{\n    var diff := n2 - n1;\n    assert BoxCapacity(n2, k, b, v) == v * (n2 + min(b, (k - 1) * n2));\n    assert BoxCapacity(n1, k, b, v) == v * (n1 + min(b, (k - 1) * n1));\n}\n\nlemma CanStoreMonotonic(n1: int, n2: int, k: int, a: int, b: int, v: int)\n    requires n1 >= 0 && n2 >= n1\n    requires CanStoreNuts(n1, k, a, b, v)\n    ensures CanStoreNuts(n2, k, a, b, v)\n{\n    CapacityMonotonic(n1, n2, k, b, v);\n    assert a <= BoxCapacity(n1, k, b, v) <= BoxCapacity(n2, k, b, v);\n}\n\nlemma BoundedSearch(k: int, a: int, b: int, v: int)\n    requires ValidInput(k, a, b, v)\n    ensures exists i :: 1 <= i <= 1009 && CanStoreNuts(i, k, a, b, v)\n{\n    var maxBoxes := 1009;\n    assert BoxCapacity(maxBoxes, k, b, v) == v * (maxBoxes + min(b, (k - 1) * maxBoxes));\n    assert min(b, (k - 1) * maxBoxes) >= 0;\n    assert BoxCapacity(maxBoxes, k, b, v) >= v * maxBoxes >= 1 * 1009 >= a;\n    assert CanStoreNuts(maxBoxes, k, a, b, v);\n}",
+  "{\n    BoundedSearch(k, a, b, v);\n    result := 1;\n    while result < 1009\n        invariant 1 <= result <= 1009\n        invariant forall j :: 1 <= j < result ==> !CanStoreNuts(j, k, a, b, v)\n        invariant exists i :: 1 <= i <= 1009 && CanStoreNuts(i, k, a, b, v)\n        decreases 1009 - result\n    {\n        if CanStoreNuts(result, k, a, b, v) {\n            assert forall j :: 1 <= j < result ==> !CanStoreNuts(j, k, a, b, v);\n            assert IsMinimalSolution(result, k, a, b, v);\n            return;\n        }\n        result := result + 1;\n    }\n    assert result == 1009;\n    assert forall j :: 1 <= j < 1009 ==> !CanStoreNuts(j, k, a, b, v);\n    assert CanStoreNuts(1009, k, a, b, v);\n    assert IsMinimalSolution(1009, k, a, b, v);\n}"
+]
+```
+--------------------------------------------------------------------------------

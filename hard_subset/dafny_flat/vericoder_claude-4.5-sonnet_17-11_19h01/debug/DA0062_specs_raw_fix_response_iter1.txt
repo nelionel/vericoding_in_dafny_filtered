@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1588 characters
+--------------------------------------------------------------------------------
+```json
+[
+"/* helper modified by LLM (iteration 2): added lemma to prove base case property */\nlemma VasyaEatsMonotonic(n: int, k1: int, k2: int)\n  requires n >= 0\n  requires k1 >= 1 && k2 >= 1\n  requires k1 <= k2\n  ensures vasya_eats_with_strategy(n, k1) <= vasya_eats_with_strategy(n, k2)\n  decreases n\n{\n  if n <= 0 {\n  } else {\n    var cur1 := if n < k1 then n else k1;\n    var remaining_after_vasya1 := n - cur1;\n    var remaining_after_petya1 := remaining_after_vasya1 - remaining_after_vasya1 / 10;\n    var cur2 := if n < k2 then n else k2;\n    var remaining_after_vasya2 := n - cur2;\n    var remaining_after_petya2 := remaining_after_vasya2 - remaining_after_vasya2 / 10;\n    VasyaEatsMonotonic(remaining_after_petya1, k1, k2);\n  }\n}\n\nlemma VasyaEatsAtLeastHalfAtN(n: int)\n  requires n >= 1\n  ensures vasya_eats_with_strategy(n, n) * 2 >= n\n  decreases n\n{\n  var cur := n;\n  var remaining_after_vasya := 0;\n  var remaining_after_petya := 0;\n  if n > 0 {\n    VasyaEatsAtLeastHalfAtN(remaining_after_petya);\n  }\n}",
+"{\n  /* code modified by LLM (iteration 2): added lemma calls to establish invariant and postcondition */\n  result := 1;\n  VasyaEatsAtLeastHalfAtN(n);\n  VasyaEatsMonotonic(n, 1, n);\n  while result < n\n    invariant 1 <= result <= n\n    invariant vasya_eats_with_strategy(n, result) * 2 >= n\n    decreases n - result\n  {\n    if result + 1 <= n && vasya_eats_with_strategy(n, result + 1) * 2 >= n {\n      VasyaEatsMonotonic(n, result, result + 1);\n      result := result + 1;\n    } else {\n      break;\n    }\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

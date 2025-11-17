@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1666 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma MaxJoyExists(C: int, Hr: int, Hb: int, Wr: int, Wb: int)\n  requires ValidInput(C, Hr, Hb, Wr, Wb)\n  ensures exists redCount: int, blueCount: int :: \n    ValidCandyCombination(redCount, blueCount, C, Wr, Wb)\n{\n  assert ValidCandyCombination(0, 0, C, Wr, Wb);\n}",
+  "{\n  var maxJoy := 0;\n  var maxRed := C / Wr;\n  var r := 0;\n  \n  while r <= maxRed\n    invariant 0 <= r <= maxRed + 1\n    invariant exists redCount: int, blueCount: int :: \n      ValidCandyCombination(redCount, blueCount, C, Wr, Wb) &&\n      maxJoy == Joy(redCount, blueCount, Hr, Hb)\n    invariant forall redCount: int, blueCount: int ::\n      ValidCandyCombination(redCount, blueCount, C, Wr, Wb) && redCount < r =>\n      Joy(redCount, blueCount, Hr, Hb) <= maxJoy\n  {\n    var remainingC := C - r * Wr;\n    var maxBlue := remainingC / Wb;\n    var b := 0;\n    \n    while b <= maxBlue\n      invariant 0 <= b <= maxBlue + 1\n      invariant exists redCount: int, blueCount: int :: \n        ValidCandyCombination(redCount, blueCount, C, Wr, Wb) &&\n        maxJoy == Joy(redCount, blueCount, Hr, Hb)\n      invariant forall redCount: int, blueCount: int ::\n        ValidCandyCombination(redCount, blueCount, C, Wr, Wb) && redCount < r =>\n        Joy(redCount, blueCount, Hr, Hb) <= maxJoy\n      invariant forall blueCount: int ::\n        ValidCandyCombination(r, blueCount, C, Wr, Wb) && blueCount < b =>\n        Joy(r, blueCount, Hr, Hb) <= maxJoy\n    {\n      var currentJoy := Joy(r, b, Hr, Hb);\n      if currentJoy > maxJoy {\n        maxJoy := currentJoy;\n      }\n      b := b + 1;\n    }\n    r := r + 1;\n  }\n  \n  result := maxJoy;\n}"
+]
+```
+--------------------------------------------------------------------------------

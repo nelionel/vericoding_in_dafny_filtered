@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 424 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  result := 1;\n  var capacity := v * (1 + min(b, (k - 1) * 1));\n  \n  while result < 1009 && capacity < a\n    invariant 1 <= result <= 1009\n    invariant capacity == BoxCapacity(result, k, b, v)\n    invariant forall j :: 1 <= j < result ==> !CanStoreNuts(j, k, a, b, v)\n    decreases 1009 - result\n  {\n    result := result + 1;\n    capacity := v * (result + min(b, (k - 1) * result));\n  }\n}"]
+```
+--------------------------------------------------------------------------------

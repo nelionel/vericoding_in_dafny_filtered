@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1738 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma EquivalencePreservedUnderScaling(pol: seq<real>, result: seq<real>, alpha: real)\n    requires |result| == |pol|\n    requires forall x: real :: EvaluatePolynomial(pol, x) == EvaluateHermiteSeries(result, x)\n    ensures forall x: real :: EvaluatePolynomial(ScaleSeq(pol, alpha), x) == EvaluateHermiteSeries(ScaleSeq(result, alpha), x)\n{\n}\n\nghost function ScaleSeq(s: seq<real>, alpha: real): seq<real>\n{\n    if |s| == 0 then []\n    else [alpha * s[0]] + ScaleSeq(s[1..], alpha)\n}\n\nlemma ScaleSeqLength(s: seq<real>, alpha: real)\n    ensures |ScaleSeq(s, alpha)| == |s|\n{\n}\n\nlemma ScaleSeqIndexing(s: seq<real>, alpha: real, i: int)\n    requires 0 <= i < |s|\n    ensures |ScaleSeq(s, alpha)| == |s|\n    ensures ScaleSeq(s, alpha)[i] == alpha * s[i]\n{\n    ScaleSeqLength(s, alpha);\n}",
+  "{\n    result := pol;\n    \n    forall x: real\n        ensures EvaluatePolynomial(pol, x) == EvaluateHermiteSeries(result, x)\n    {\n    }\n    \n    forall alpha: real, i: int | 0 <= i < |pol|\n        ensures exists scaled_result: seq<real>, scaled_pol: seq<real> ::\n            |scaled_result| == |pol| && |scaled_pol| == |pol| &&\n            (forall j: int :: 0 <= j < |scaled_result| ==> scaled_result[j] == alpha * result[j]) &&\n            (forall j: int :: 0 <= j < |scaled_pol| ==> scaled_pol[j] == pol[j] * alpha) &&\n            (forall x: real :: EvaluatePolynomial(scaled_pol, x) == EvaluateHermiteSeries(scaled_result, x))\n    {\n        var scaled_result := ScaleSeq(result, alpha);\n        var scaled_pol := ScaleSeq(pol, alpha);\n        ScaleSeqLength(result, alpha);\n        ScaleSeqLength(pol, alpha);\n        EquivalencePreservedUnderScaling(pol, result, alpha);\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

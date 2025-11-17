@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 572 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var sf_count := 0;\n  var fs_count := 0;\n  var i := 1;\n  while i < n\n    invariant 1 <= i <= n\n    invariant sf_count == count_sf_flights(s[..i])\n    invariant fs_count == count_fs_flights(s[..i])\n  {\n    assert s[..i+1][..i] == s[..i];\n    if s[i] == 'F' && s[i-1] != 'F' {\n      sf_count := sf_count + 1;\n    }\n    if s[i] == 'S' && s[i-1] != 'S' {\n      fs_count := fs_count + 1;\n    }\n    i := i + 1;\n  }\n  assert s[..n] == s;\n  if sf_count > fs_count {\n    result := \"YES\";\n  } else {\n    result := \"NO\";\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

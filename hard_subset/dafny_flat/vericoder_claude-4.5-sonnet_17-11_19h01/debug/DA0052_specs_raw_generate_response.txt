@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 536 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var countD := 0;\n  var countR := 0;\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant countD == CountD(s[..i])\n    invariant countR == CountR(s[..i])\n  {\n    if s[i] == 'D' {\n      countD := countD + 1;\n    } else {\n      countR := countR + 1;\n    }\n    i := i + 1;\n  }\n  assert s[..n] == s;\n  if countD == 0 {\n    result := \"R\";\n  } else if countR == 0 {\n    result := \"D\";\n  } else if countD >= countR {\n    result := \"D\";\n  } else {\n    result := \"R\";\n  }\n}"]
+```
+--------------------------------------------------------------------------------

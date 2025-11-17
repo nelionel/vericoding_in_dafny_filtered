@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1124 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "predicate IsValidChebyshevCoeffs(coeffs: seq<real>, roots: seq<real>)\n{\n  |coeffs| == |roots| + 1 &&\n  (|roots| > 0 ==> coeffs[|roots|] == Pow(2.0, 1 - |roots|)) &&\n  (forall i :: 0 <= i < |roots| ==> EvalChebyshevPoly(coeffs, roots[i]) == 0.0)\n}\n\nfunction MultiplyPolyByLinear(coeffs: seq<real>, root: real): seq<real>\n  ensures |MultiplyPolyByLinear(coeffs, root)| == |coeffs| + 1\n{\n  var n := |coeffs|;\n  seq(n + 1, i requires 0 <= i <= n => \n    if i == 0 then -root * coeffs[0]\n    else if i == n then coeffs[n - 1]\n    else coeffs[i - 1] - root * coeffs[i]\n  )\n}\n\nfunction BuildPolyFromRoots(roots: seq<real>, idx: nat): seq<real>\n  requires idx <= |roots|\n  ensures |BuildPolyFromRoots(roots, idx)| == idx + 1\n  ensures idx > 0 ==> BuildPolyFromRoots(roots, idx)[idx] == Pow(2.0, 1 - idx)\n  decreases idx\n{\n  if idx == 0 then [Pow(2.0, 1)]\n  else \n    var prev := BuildPolyFromRoots(roots, idx - 1);\n    MultiplyPolyByLinear(prev, roots[idx - 1])\n}",
+  "{\n  if |roots| == 0 {\n    coeffs := [1.0];\n  } else {\n    coeffs := BuildPolyFromRoots(roots, |roots|);\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

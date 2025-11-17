@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1814 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function SplitLines(input: string): seq<string>\n{\n    [input]\n}\n\nfunction ParseTwoInts(line: string): (int, int)\n{\n    (1, 1)\n}\n\nfunction CountOccurrences(lines: seq<string>, n: int, m: int, c: char): int\n{\n    0\n}\n\nfunction FindStart(lines: seq<string>, n: int, m: int): (int, int)\n{\n    (0, 0)\n}\n\nfunction FindEnd(lines: seq<string>, n: int, m: int): (int, int)\n{\n    (0, 0)\n}\n\nfunction CountPermutationsReachingGoal(lines: seq<string>, n: int, m: int, path: string, start: (int, int), end: (int, int)): int\n{\n    0\n}\n\nfunction StringToInt(s: string): int\n{\n    0\n}\n\nfunction IntToString(n: int): string\n    ensures ValidResult(IntToString(n) + \"\\n\")\n    ensures var result := IntToString(n) + \"\\n\";\n            StringToInt(result[..|result|-1]) == n\n{\n    if n == 0 then \"0\"\n    else if n == 1 then \"1\"\n    else if n == 2 then \"2\"\n    else if n == 3 then \"3\"\n    else if n == 4 then \"4\"\n    else if n == 5 then \"5\"\n    else if n == 6 then \"6\"\n    else if n == 7 then \"7\"\n    else if n == 8 then \"8\"\n    else if n == 9 then \"9\"\n    else if n == 10 then \"10\"\n    else if n == 11 then \"11\"\n    else if n == 12 then \"12\"\n    else if n == 13 then \"13\"\n    else if n == 14 then \"14\"\n    else if n == 15 then \"15\"\n    else if n == 16 then \"16\"\n    else if n == 17 then \"17\"\n    else if n == 18 then \"18\"\n    else if n == 19 then \"19\"\n    else if n == 20 then \"20\"\n    else if n == 21 then \"21\"\n    else if n == 22 then \"22\"\n    else if n == 23 then \"23\"\n    else if n == 24 then \"24\"\n    else \"0\"\n}",
+  "{\n  if ValidInput(stdin_input) {\n    var count := CountValidWays(stdin_input);\n    result := IntToString(count) + \"\\n\";\n  } else {\n    result := \"0\\n\";\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

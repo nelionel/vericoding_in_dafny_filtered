@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 763 characters
+--------------------------------------------------------------------------------
+```json
+["lemma Exp_int_property(x: nat, y: nat, z: nat)\n  requires z > 1\n  ensures Exp_int(x, y) % z == Exp_int(x % z, y) % z\n{\n}\n\nlemma Exp_int_zero(x: nat)\n  ensures Exp_int(x, 0) == 1\n{\n}\n\nlemma Str2Int_Zeros(n: nat, s: string)\n  requires |s| == n\n  requires AllZero(s)\n  ensures Str2Int(s) == 0\n{\n}\n\nlemma PowerOf2Property(n: nat)\n  ensures Exp_int(2, n) >= 1\n{\n}", "{\n  if |sy| == 1 && sy[0] == '0' {\n    var zeros := Zeros(0);\n    res := \"1\";\n  } else {\n    var sy_prefix := sy[0..|sy|-1];\n    var rec_res := ModExp(sx, sy_prefix, sz);\n    var squared := Mul(rec_res, rec_res);\n    \n    if sy[|sy|-1] == '1' {\n      var temp := Mul(squared, sx);\n      res := temp;\n    } else {\n      res := squared;\n    }\n  }\n}"]
+```
+--------------------------------------------------------------------------------

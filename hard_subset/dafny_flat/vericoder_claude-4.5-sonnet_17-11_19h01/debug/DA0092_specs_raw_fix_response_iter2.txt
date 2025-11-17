@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1096 characters
+--------------------------------------------------------------------------------
+[
+  "/* helper modified by LLM (iteration 3): added lemma to prove MaxProductOfDigitsInRange properties */\nlemma MaxProductInRangeProperties(i: int)\n  requires i >= 1\n  ensures MaxProductOfDigitsInRange(i) >= 1\n  ensures exists k :: 1 <= k <= i && ProductOfDigits(k) == MaxProductOfDigitsInRange(i)\n  ensures forall k :: 1 <= k <= i ==> ProductOfDigits(k) <= MaxProductOfDigitsInRange(i)\n{\n  if i == 1 {\n  } else {\n    MaxProductInRangeProperties(i - 1);\n  }\n}",
+  "{\n  /* code modified by LLM (iteration 3): initialize result correctly to satisfy loop invariant on entry */\n  result := 1;\n  var i := 1;\n  \n  while i < n\n    invariant 1 <= i <= n\n    invariant result >= 1\n    invariant result == MaxProductOfDigitsInRange(i)\n    invariant forall k :: 1 <= k <= i ==> ProductOfDigits(k) <= result\n    invariant exists k :: 1 <= k <= i && ProductOfDigits(k) == result\n  {\n    MaxProductInRangeProperties(i);\n    i := i + 1;\n    var current := ProductOfDigits(i);\n    if current > result {\n      result := current;\n    }\n  }\n  \n  MaxProductInRangeProperties(n);\n}"
+]
+--------------------------------------------------------------------------------

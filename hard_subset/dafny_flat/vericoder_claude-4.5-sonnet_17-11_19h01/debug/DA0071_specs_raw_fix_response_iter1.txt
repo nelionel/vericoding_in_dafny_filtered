@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1693 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 2): Added lemma to prove decreases expression actually decreases */\nlemma PowPositive(base: int, exp: int)\n  requires exp >= 0\n  requires base > 0\n  ensures pow(base, exp) > 0\n{\n  if exp == 0 {\n  } else {\n    PowPositive(base, exp - 1);\n  }\n}\n\nlemma PowIncreasing(base: int, exp: int)\n  requires base >= 3\n  requires exp >= 0\n  ensures pow(base, exp + 1) >= 3 * pow(base, exp)\n{\n}\n\nlemma GrowthLemma(a: int, b: int, y: int)\n  requires 1 <= a <= b\n  requires y >= 0\n  requires a * pow(3, y) <= b * pow(2, y)\n  ensures a * pow(3, y + 1) > b * pow(2, y + 1) || a * pow(3, y + 1) <= b * pow(2, y + 1)\n{\n}\n\nlemma DecreaseProof(a: int, b: int, y: int)\n  requires 1 <= a <= b <= 10\n  requires y >= 0\n  requires a * pow(3, y) <= b * pow(2, y)\n  ensures b * pow(2, y + 1) - a * pow(3, y + 1) < b * pow(2, y) - a * pow(3, y)\n{\n  calc {\n    b * pow(2, y + 1) - a * pow(3, y + 1);\n    ==\n    b * 2 * pow(2, y) - a * 3 * pow(3, y);\n    ==\n    2 * (b * pow(2, y)) - 3 * (a * pow(3, y));\n    <=\n    2 * (b * pow(2, y)) - 3 * (a * pow(3, y));\n  }\n  calc {\n    b * pow(2, y) - a * pow(3, y);\n    >=\n    0;\n  }\n}",
+  "{\n  /* code modified by LLM (iteration 2): Fixed loop invariant and decreases clause */\n  years := 0;\n  PowPositive(2, 0);\n  PowPositive(3, 0);\n  \n  while a * pow(3, years) <= b * pow(2, years)\n    invariant years >= 0\n    invariant years > 0 ==> a * pow(3, years - 1) <= b * pow(2, years - 1)\n    decreases b * pow(2, years) - a * pow(3, years)\n  {\n    PowPositive(2, years + 1);\n    PowPositive(3, years + 1);\n    DecreaseProof(a, b, years);\n    years := years + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

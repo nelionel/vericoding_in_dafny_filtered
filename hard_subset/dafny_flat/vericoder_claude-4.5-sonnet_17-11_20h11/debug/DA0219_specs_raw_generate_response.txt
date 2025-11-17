@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 245 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  result := 1;\n  while TotalCubesForHeight(result + 1) <= n\n    invariant result >= 1\n    invariant TotalCubesForHeight(result) <= n\n    decreases n - TotalCubesForHeight(result)\n  {\n    result := result + 1;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

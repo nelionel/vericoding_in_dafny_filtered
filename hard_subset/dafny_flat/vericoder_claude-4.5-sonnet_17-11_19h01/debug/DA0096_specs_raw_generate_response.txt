@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 518 characters
+--------------------------------------------------------------------------------
+[
+"",
+"{\n  var coords := parseInputFunc(input);\n  if |coords| != 6 {\n    result := \"\";\n    return;\n  }\n  var a := (coords[0], coords[1]);\n  var b := (coords[2], coords[3]);\n  var c := (coords[4], coords[5]);\n  var distABSqr := lengthSqr(a, b);\n  var distBCSqr := lengthSqr(b, c);\n  var dx1 := c.0 - b.0;\n  var dy1 := c.1 - b.1;\n  var dx2 := b.0 - a.0;\n  var dy2 := b.1 - a.1;\n  if distABSqr == distBCSqr && dx1 * dy2 != dy1 * dx2 {\n    result := \"Yes\";\n  } else {\n    result := \"No\";\n  }\n}"
+]
+--------------------------------------------------------------------------------

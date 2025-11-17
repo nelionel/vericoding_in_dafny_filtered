@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 711 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma SumOfDigitsNonnegative(x: int)\n  requires x >= 0\n  ensures SumOfDigits(x) >= 0\n  decreases x\n{\n  if x == 0 {\n  } else {\n    SumOfDigitsNonnegative(x / 10);\n  }\n}\n\nlemma SumOfDigitsUpperBound(x: int)\n  requires x >= 0\n  ensures SumOfDigits(x) <= x\n  decreases x\n{\n  if x == 0 {\n  } else {\n    SumOfDigitsUpperBound(x / 10);\n  }\n}",
+  "{\n  var count := 0;\n  var i := 1;\n  \n  while i <= n\n    invariant 1 <= i <= n + 1\n    invariant count == |set x | 1 <= x < i && Check(x, s)|\n  {\n    SumOfDigitsNonnegative(i);\n    SumOfDigitsUpperBound(i);\n    \n    if Check(i, s) {\n      count := count + 1;\n    }\n    \n    i := i + 1;\n  }\n  \n  result := count;\n}"
+]
+```
+--------------------------------------------------------------------------------

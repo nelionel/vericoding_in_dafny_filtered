@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 270 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var candidate := n + 1;\n  while candidate % k != 0\n    invariant candidate > n\n    invariant forall x :: n < x < candidate ==> x % k != 0\n    decreases k - (candidate % k)\n  {\n    candidate := candidate + 1;\n  }\n  result := candidate;\n}"]
+```
+--------------------------------------------------------------------------------

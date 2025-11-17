@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1245 characters
+--------------------------------------------------------------------------------
+```json
+[
+"/* helper modified by LLM (iteration 2): Add lemma to prove group membership is exhaustive */\nlemma GroupsExhaustive()\n  ensures forall c :: 'A' <= c <= 'Z' ==> c in Group1() || c in Group2()\n{\n}",
+"{\n  /* code modified by LLM (iteration 2): Add invariant to track that all chars are in at least one group, and strengthen post-loop assertions */\n  var i := 0;\n  var allGroup1 := true;\n  var allGroup2 := true;\n  \n  while i < |word|\n    invariant 0 <= i <= |word|\n    invariant allGroup1 ==> forall j :: 0 <= j < i ==> word[j] in Group1()\n    invariant allGroup2 ==> forall j :: 0 <= j < i ==> word[j] in Group2()\n    invariant !allGroup1 ==> exists j :: 0 <= j < i && word[j] !in Group1()\n    invariant !allGroup2 ==> exists j :: 0 <= j < i && word[j] !in Group2()\n  {\n    if word[i] !in Group1() {\n      allGroup1 := false;\n    }\n    if word[i] !in Group2() {\n      allGroup2 := false;\n    }\n    i := i + 1;\n  }\n  \n  assert i == |word|;\n  \n  if allGroup1 {\n    assert AllInGroup1(word);\n    result := \"YES\";\n  } else if allGroup2 {\n    assert AllInGroup2(word);\n    result := \"YES\";\n  } else {\n    assert !AllInGroup1(word);\n    assert !AllInGroup2(word);\n    result := \"NO\";\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

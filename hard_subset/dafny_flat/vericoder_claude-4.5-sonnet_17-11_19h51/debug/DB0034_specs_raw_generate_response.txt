@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 917 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma ExpMulMod(a: nat, b: nat, n: nat)\n  requires n > 0\n  ensures (a * b) % n == ((a % n) * (b % n)) % n\n{\n}\n\nlemma ExpAddExponent(base: nat, e1: nat, e2: nat)\n  ensures Exp_int(base, e1 + e2) == Exp_int(base, e1) * Exp_int(base, e2)\n{\n}\n\nlemma ExpDoubleExponent(base: nat, e: nat)\n  ensures Exp_int(base, 2 * e) == Exp_int(Exp_int(base, 2), e)\n{\n}\n\nlemma ModProperty(a: nat, b: nat, n: nat)\n  requires n > 0\n  ensures (a % n * b % n) % n == (a * b) % n\n{\n}",
+  "{\n  if |sy| == 1 && sy[0] == '0' {\n    res := \"1\";\n    return;\n  }\n  \n  var last := sy[|sy| - 1];\n  var sy_prefix := sy[0..|sy| - 1];\n  \n  if |sy_prefix| == 0 {\n    res := sx;\n    return;\n  }\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  var squared := Mul(rec_res, rec_res);\n  \n  if last == '0' {\n    res := squared;\n  } else {\n    var temp := Mul(squared, sx);\n    res := temp;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

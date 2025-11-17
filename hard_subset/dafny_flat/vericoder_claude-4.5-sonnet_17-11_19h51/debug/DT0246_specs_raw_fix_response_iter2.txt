@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 332 characters
+--------------------------------------------------------------------------------
+[
+"",
+"{\n  /* code modified by LLM (iteration 3): use witness from precondition */\n  ghost var inverse :| IsSquareMatrix(inverse) && |inverse| == |a| &&\n        IsApproximateIdentity(MatrixMultiply(a, inverse), 0.0000000001) &&\n        IsApproximateIdentity(MatrixMultiply(inverse, a), 0.0000000001);\n  result := inverse;\n}"
+]
+--------------------------------------------------------------------------------

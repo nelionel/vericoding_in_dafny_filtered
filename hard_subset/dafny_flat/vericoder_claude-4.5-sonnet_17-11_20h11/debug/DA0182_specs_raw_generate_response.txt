@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 729 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var lines := SplitLines(stdin_input);\n  \n  if |lines| == 0 {\n    return \"NO\\n\";\n  }\n  \n  var first_line := SplitInts(lines[0]);\n  \n  if |first_line| < 2 {\n    return \"NO\\n\";\n  }\n  \n  var n := first_line[0];\n  var m := first_line[1];\n  \n  if m <= 0 || n <= 0 {\n    return \"NO\\n\";\n  }\n  \n  var i := 1;\n  while i <= m && i < |lines|\n    invariant 1 <= i <= m + 1\n    invariant i <= |lines| + 1\n    invariant forall j :: 1 <= j < i && j < |lines| ==> !is_dangerous_group(SplitInts(lines[j]))\n  {\n    var group_data := SplitInts(lines[i]);\n    \n    if is_dangerous_group(group_data) {\n      return \"YES\\n\";\n    }\n    \n    i := i + 1;\n  }\n  \n  return \"NO\\n\";\n}"]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 418 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var i := 1;\n  var totalBefore := 0;\n  \n  while i <= n\n    invariant 1 <= i <= n + 1\n    invariant totalBefore == TotalIdentifiersAfterRobot(i - 1)\n    invariant k > totalBefore\n  {\n    var totalAfter := TotalIdentifiersAfterRobot(i);\n    if k <= totalAfter {\n      result := L[k - totalBefore - 1];\n      return;\n    }\n    i := i + 1;\n    totalBefore := totalAfter;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1101 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function FindMaxDivisor(k: int, a: seq<int>, upTo: int): int\n  requires |a| >= 1\n  requires 0 <= upTo <= |a|\n  requires forall i :: 0 <= i < |a| ==> a[i] >= 1\n  requires exists i :: 0 <= i < upTo && k % a[i] == 0\n  ensures 0 <= FindMaxDivisor(k, a, upTo) < upTo\n  ensures k % a[FindMaxDivisor(k, a, upTo)] == 0\n  ensures forall i :: 0 <= i < upTo && k % a[i] == 0 ==> a[i] <= a[FindMaxDivisor(k, a, upTo)]\n{\n  if upTo == 1 then 0\n  else\n    var prev := FindMaxDivisor(k, a, upTo - 1);\n    if k % a[upTo - 1] == 0 && a[upTo - 1] > a[prev] then upTo - 1 else prev\n}\n\nlemma FindMaxDivisorIsOptimal(k: int, a: seq<int>, upTo: int)\n  requires |a| >= 1\n  requires 0 <= upTo <= |a|\n  requires forall i :: 0 <= i < |a| ==> a[i] >= 1\n  requires exists i :: 0 <= i < upTo && k % a[i] == 0\n  ensures IsOptimalChoice(k, a[..upTo], FindMaxDivisor(k, a, upTo))\n{\n  var idx := FindMaxDivisor(k, a, upTo);\n  assert ValidBucket(k, a[idx]);\n}",
+  "{\n  var maxIdx := FindMaxDivisor(k, a, n);\n  result := HoursNeeded(k, a[maxIdx]);\n  assert IsOptimalChoice(k, a, maxIdx);\n}"
+]
+```
+--------------------------------------------------------------------------------

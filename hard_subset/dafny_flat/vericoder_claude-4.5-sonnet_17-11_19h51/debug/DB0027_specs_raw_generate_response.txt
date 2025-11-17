@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 470 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  if sy == \"0\" {\n    res := \"1\";\n    return;\n  }\n  \n  var last_bit := sy[|sy|-1];\n  var sy_prefix := sy[0..|sy|-1];\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  var squared := Mul(rec_res, rec_res);\n  var _, mod_squared := DivMod(squared, sz);\n  \n  if last_bit == '0' {\n    res := mod_squared;\n  } else {\n    var temp := Mul(mod_squared, sx);\n    var _, mod_result := DivMod(temp, sz);\n    res := mod_result;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1271 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "/* helper modified by LLM (iteration 2): Fixed precondition and bounds checking for SumLaguerreContributions */\nfunction ConvertLaguerreCoefficient(c: seq<real>, idx: nat, polyDegree: nat): real\n  requires idx < |c|\n  requires polyDegree < |c|\n{\n  c[idx] * LaguerrePolynomialCoefficient(idx, polyDegree)\n}\n\nfunction LaguerrePolynomialCoefficient(laguerreIndex: nat, polyPower: nat): real\n{\n  if laguerreIndex == 0 then\n    if polyPower == 0 then 1.0 else 0.0\n  else if laguerreIndex == 1 then\n    if polyPower == 0 then 1.0\n    else if polyPower == 1 then -1.0\n    else 0.0\n  else\n    0.0\n}\n\nfunction SumLaguerreContributions(c: seq<real>, polyDegree: nat): real\n  requires |c| > 0\n  requires polyDegree < |c|\n  decreases |c|\n{\n  if |c| == 1 then\n    ConvertLaguerreCoefficient(c, 0, polyDegree)\n  else\n    ConvertLaguerreCoefficient(c, |c| - 1, polyDegree) + (if polyDegree < |c| - 1 then SumLaguerreContributions(c[..|c| - 1], polyDegree) else 0.0)\n}",
+  "{\n  /* code modified by LLM (iteration 2): Fixed precondition check for SumLaguerreContributions */\n  if |c| == 1 {\n    result := c;\n  } else {\n    result := seq(|c|, i requires 0 <= i < |c| => if i < |c| then SumLaguerreContributions(c, i) else 0.0);\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

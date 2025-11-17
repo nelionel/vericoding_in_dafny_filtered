@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 371 characters
+--------------------------------------------------------------------------------
+[
+"lemma DistinctEmpty()\n  ensures AllDistinct([])\n{\n}\n\nlemma FiniteEmpty()\n  ensures AllFinite([])\n{\n}\n\nlemma IsRootImpliesPolynomialZero(coeffs: seq<real>, root: real)\n  requires |coeffs| > 0\n  requires IsRoot(coeffs, root)\n  ensures EvaluateHermiteESeriesComplete(coeffs, root) == 0.0\n{\n}",
+"{\n  roots := [];\n  DistinctEmpty();\n  FiniteEmpty();\n}"
+]
+--------------------------------------------------------------------------------

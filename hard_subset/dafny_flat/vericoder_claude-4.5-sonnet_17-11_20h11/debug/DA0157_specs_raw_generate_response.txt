@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 255 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var area := 6 * n;\n  var dim1 := if a >= b then a else b;\n  var dim2 := if a >= b then b else a;\n  \n  if dim1 * dim2 >= area {\n    result := [dim1 * dim2, dim1, dim2];\n  } else {\n    result := [area, area, 1];\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+=== Raw LLM Fix Response - Iteration 1 ===
+Length: 1514 characters
+--------------------------------------------------------------------------------
+```json
+[
+"/* helper modified by LLM (iteration 2): added lemmas to prove modular exponentiation properties */\nlemma ExpDoubleProperty(x: nat, y: nat)\n  ensures Exp_int(x, 2 * y) == Exp_int(Exp_int(x, y), 2)\n{\n  if y == 0 {\n  } else {\n    calc {\n      Exp_int(x, 2 * y);\n      ==\n      x * Exp_int(x, 2 * y - 1);\n      ==\n      x * x * Exp_int(x, 2 * y - 2);\n    }\n  }\n}\n\nlemma ExpAddProperty(x: nat, y: nat)\n  ensures y > 0 ==> Exp_int(x, y) == x * Exp_int(x, y - 1)\n{\n}\n\nlemma ModMulProperty(a: nat, b: nat, m: nat)\n  requires m > 0\n  ensures (a * b) % m == ((a % m) * (b % m)) % m\n{\n}\n\nlemma ExpHalfProperty(x: nat, y: nat)\n  requires y > 0\n  ensures Exp_int(x, y) == (if y % 2 == 0 then Exp_int(Exp_int(x, y / 2), 2) else x * Exp_int(Exp_int(x, y / 2), 2))\n{\n}",
+"{\n  /* code modified by LLM (iteration 2): handle base case properly and ensure preconditions for recursive call */\n  if sy == \"0\" {\n    res := \"1\";\n    return;\n  }\n  \n  var last_bit := sy[|sy|-1];\n  var sy_prefix := sy[0..|sy|-1];\n  \n  if |sy_prefix| == 0 {\n    if last_bit == '0' {\n      res := \"1\";\n    } else {\n      var _, rem := DivMod(sx, sz);\n      res := rem;\n    }\n    return;\n  }\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  \n  var temp1 := Add(rec_res, rec_res);\n  var _, squared := DivMod(temp1, sz);\n  \n  if last_bit == '0' {\n    res := squared;\n  } else {\n    var temp2 := Add(squared, sx);\n    var _, rem2 := DivMod(temp2, sz);\n    res := rem2;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

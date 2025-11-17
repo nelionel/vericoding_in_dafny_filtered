@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 402 characters
+--------------------------------------------------------------------------------
+```json
+["function CubeRoot(x: real): real\n  ensures CubeRoot(x) * CubeRoot(x) * CubeRoot(x) == x", "{\n  result := new real[x.Length];\n  var i := 0;\n  while i < x.Length\n    invariant 0 <= i <= x.Length\n    invariant result.Length == x.Length\n    invariant forall j :: 0 <= j < i ==> result[j] * result[j] * result[j] == x[j]\n  {\n    result[i] := CubeRoot(x[i]);\n    i := i + 1;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

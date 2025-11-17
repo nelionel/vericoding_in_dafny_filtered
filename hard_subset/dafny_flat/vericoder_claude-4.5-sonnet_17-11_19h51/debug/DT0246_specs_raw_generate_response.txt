@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 484 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "// No additional helpers needed - all helper functions are in preamble",
+  "{\n  // Since IsInvertible(a) is a precondition, we know an inverse exists\n  // We use a witness to obtain it from the existential quantifier\n  ghost var inverse :| IsSquareMatrix(inverse) && |inverse| == |a| &&\n        IsApproximateIdentity(MatrixMultiply(a, inverse), 0.0000000001) &&\n        IsApproximateIdentity(MatrixMultiply(inverse, a), 0.0000000001);\n  result := inverse;\n}"
+]
+```
+--------------------------------------------------------------------------------

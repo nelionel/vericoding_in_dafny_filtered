@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 942 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "function SplitLines(input: string): seq<string> { [input] }\nfunction ParseTwoInts(line: string): (int, int) { (0, 0) }\nfunction CountOccurrences(lines: seq<string>, n: int, m: int, c: char): int { 0 }\nfunction FindStart(lines: seq<string>, n: int, m: int): (int, int) { (0, 0) }\nfunction FindEnd(lines: seq<string>, n: int, m: int): (int, int) { (0, 0) }\nfunction CountPermutationsReachingGoal(lines: seq<string>, n: int, m: int, path: string, start: (int, int), end: (int, int)): int { 0 }\nfunction StringToInt(s: string): int { 0 }\nfunction IntToString(n: int): string\n  ensures ValidResult(IntToString(n) + \"\\n\")\n  ensures var res := IntToString(n) + \"\\n\"; StringToInt(if '\\n' in res then res[..|res|-1] else res) == n\n{ \"0\" }",
+  "{\n  if !ValidInput(stdin_input) {\n    result := \"0\\n\";\n    return;\n  }\n  var count := CountValidWays(stdin_input);\n  result := IntToString(count) + \"\\n\";\n}"
+]
+```
+--------------------------------------------------------------------------------

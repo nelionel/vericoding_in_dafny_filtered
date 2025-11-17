@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 716 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  if k <= 0 || |q| == 0 {\n    return [];\n  }\n  \n  var groups: seq<seq<char>> := [];\n  var current_group: seq<char> := [];\n  var seen_chars: set<char> := {};\n  \n  var i := 0;\n  while i < |q|\n  {\n    var c := q[i];\n    \n    if c in seen_chars {\n      if |current_group| > 0 {\n        groups := groups + [current_group];\n        current_group := [];\n      }\n      current_group := [c];\n    } else {\n      current_group := current_group + [c];\n      seen_chars := seen_chars + {c};\n    }\n    \n    i := i + 1;\n  }\n  \n  if |current_group| > 0 {\n    groups := groups + [current_group];\n  }\n  \n  if |groups| == k {\n    return groups;\n  } else {\n    return [];\n  }\n}"]
+```
+--------------------------------------------------------------------------------

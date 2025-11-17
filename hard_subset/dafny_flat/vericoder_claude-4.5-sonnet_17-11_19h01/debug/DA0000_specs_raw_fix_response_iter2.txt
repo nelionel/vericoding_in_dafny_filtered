@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 742 characters
+--------------------------------------------------------------------------------
+[
+"/* helper modified by LLM (iteration 3): no helpers needed */",
+"{\n  /* code modified by LLM (iteration 3): initialize maxSum with digitSum(1) */\n  var maxSum := digitSum(intToDigits(1));\n  result := 1;\n  var i := 2;\n  while i <= x\n    invariant 2 <= i <= x + 1\n    invariant result > 0 && result < i\n    invariant maxSum == digitSum(intToDigits(result))\n    invariant forall y :: 1 <= y < i ==> digitSum(intToDigits(y)) <= maxSum\n    invariant forall y :: 1 <= y < i && digitSum(intToDigits(y)) == maxSum ==> y <= result\n  {\n    var currentSum := digitSum(intToDigits(i));\n    if currentSum > maxSum || (currentSum == maxSum && i > result) {\n      maxSum := currentSum;\n      result := i;\n    }\n    i := i + 1;\n  }\n}"
+]
+--------------------------------------------------------------------------------

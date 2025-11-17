@@ -1,0 +1,104 @@
+// <vc-preamble>
+ghost function Str2Int(s: string): nat
+  requires ValidBitString(s)
+  decreases s
+{
+  if |s| == 0 then  0  else  (2 * Str2Int(s[0..|s|-1]) + (if s[|s|-1] == '1' then 1 else 0))
+}
+ghost function Exp_int(x: nat, y:nat): nat
+{
+  if y == 0 then 1 else x * Exp_int(x, y - 1)
+}
+predicate ValidBitString(s: string)
+{
+
+  forall i | 0 <= i < |s| :: s[i] == '0' || s[i] == '1'
+}
+
+method Add(s1: string, s2: string) returns (res: string)
+  requires ValidBitString(s1) && ValidBitString(s2)
+  ensures ValidBitString(res)
+  ensures Str2Int(res) == Str2Int(s1) + Str2Int(s2)
+{
+  assume{:axiom} false;
+}
+// </vc-preamble>
+
+// <vc-helpers>
+/* helper modified by LLM (iteration 3): Removed ghost keyword from Int2Str to allow calling in compiled code */
+function Pow(base: nat, exp: nat, mod: nat): nat
+  requires mod > 1
+  decreases exp
+{
+  if exp == 0 then 1 % mod
+  else if exp % 2 == 0 then
+    var half := Pow(base, exp / 2, mod);
+    (half * half) % mod
+  else
+    (base * Pow(base, exp - 1, mod)) % mod
+}
+
+lemma PowCorrect(base: nat, exp: nat, mod: nat)
+  requires mod > 1
+  ensures Pow(base, exp, mod) == Exp_int(base, exp) % mod
+  decreases exp
+{
+  if exp == 0 {
+  } else if exp % 2 == 0 {
+    PowCorrect(base, exp / 2, mod);
+    var half_exp := exp / 2;
+    assert exp == half_exp + half_exp;
+    calc {
+      Exp_int(base, exp);
+      Exp_int(base, half_exp + half_exp);
+      Exp_int(base, half_exp) * Exp_int(base, half_exp);
+    }
+  } else {
+    PowCorrect(base, exp - 1, mod);
+  }
+}
+
+function Int2Str(n: nat): string
+  ensures ValidBitString(Int2Str(n))
+  ensures Str2Int(Int2Str(n)) == n
+{
+  if n == 0 then "0"
+  else if n == 1 then "1"
+  else Int2Str(n / 2) + (if n % 2 == 1 then "1" else "0")
+}
+
+lemma Int2StrCorrect(n: nat)
+  ensures ValidBitString(Int2Str(n))
+  ensures Str2Int(Int2Str(n)) == n
+{
+}
+// </vc-helpers>
+
+// <vc-spec>
+method ModExp(sx: string, sy: string, sz: string) returns (res: string)
+  requires ValidBitString(sx) && ValidBitString(sy) &&  ValidBitString(sz)
+  ensures ValidBitString(res)
+  ensures Str2Int(res) == Exp_int(Str2Int(sx), Str2Int(sy)) % Str2Int(sz)
+
+  requires |sy| > 0 && Str2Int(sz) > 1
+  decreases |sy|
+// </vc-spec>
+// <vc-code>
+/* code modified by LLM (iteration 3): Int2Str is now non-ghost function */
+{
+  if |sy| == 0 {
+    res := "1";
+    return;
+  }
+  
+  var x := Str2Int(sx);
+  var y := Str2Int(sy);
+  var z := Str2Int(sz);
+  
+  var result := Pow(x, y, z);
+  PowCorrect(x, y, z);
+  
+  res := Int2Str(result);
+  Int2StrCorrect(result);
+}
+// </vc-code>

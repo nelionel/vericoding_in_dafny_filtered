@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 311 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  result := 1;\n  while result < n\n    invariant 1 <= result <= n\n    invariant vasya_eats_with_strategy(n, result) * 2 >= n\n    decreases n - result\n  {\n    if vasya_eats_with_strategy(n, result + 1) * 2 >= n {\n      result := result + 1;\n    } else {\n      break;\n    }\n  }\n}"]
+```
+--------------------------------------------------------------------------------

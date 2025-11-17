@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 1316 characters
+--------------------------------------------------------------------------------
+[
+"/* helper modified by LLM (iteration 3): added lemmas to prove digit properties */\nlemma DistinctDigitsImpliesAllDistinct(n: int)\n  requires HasDistinctDigits(n)\n  ensures AllDistinct(NumberToDigits(n))\n{\n}\n\nlemma NumberToDigitsLength(n: int)\n  requires n >= 1000 && n <= 9876\n  ensures |NumberToDigits(n)| == 4\n{\n  var digits := NumberToDigits(n);\n  assert digits == NumberToDigitsHelper(n, []);\n  NumberToDigitsHelperLength(n, []);\n}\n\nlemma NumberToDigitsHelperLength(n: int, acc: seq<int>)\n  requires n >= 1000 && n <= 9876\n  requires |acc| == 0\n  ensures |NumberToDigitsHelper(n, acc)| == 4\n  decreases n\n{\n  if n == 0 {\n  } else {\n    NumberToDigitsHelperLength(n / 10, [n % 10] + acc);\n  }\n}",
+"{\n  /* code modified by LLM (iteration 3): added assertion to help prove HasDistinctDigits */\n  result := y + 1;\n  while result <= 9876 && !HasDistinctDigits(result)\n    invariant result > y\n    invariant result <= 9877\n    invariant forall n :: y < n < result ==> !HasDistinctDigits(n)\n    decreases 9876 - result\n  {\n    result := result + 1;\n  }\n  assert result > y;\n  assert result <= 9877;\n  assert HasDistinctDigits(result) || result > 9876;\n  if result > 9876 {\n    result := 9877;\n  }\n  var digits := NumberToDigits(result);\n  assert AllDistinct(digits);\n}"
+]
+--------------------------------------------------------------------------------

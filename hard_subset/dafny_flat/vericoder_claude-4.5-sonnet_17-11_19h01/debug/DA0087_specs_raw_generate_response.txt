@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 331 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  if n == 1 {\n    return -1;\n  }\n  \n  var x := 1;\n  while x * x + digitSum(x) * x < n\n    invariant x >= 1\n    invariant forall y :: 1 <= y < x ==> y * y + digitSum(y) * y != n\n  {\n    x := x + 1;\n  }\n  \n  if x * x + digitSum(x) * x == n {\n    return x;\n  } else {\n    return -1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

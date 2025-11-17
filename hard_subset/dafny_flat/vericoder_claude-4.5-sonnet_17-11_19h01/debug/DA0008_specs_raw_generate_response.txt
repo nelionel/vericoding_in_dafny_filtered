@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1421 characters
+--------------------------------------------------------------------------------
+```json
+["function countMonotonic(n: int, m: int, target: int): int\n  requires n >= 0 && m >= 1 && target >= 1\n  ensures countMonotonic(n, m, target) == countLessValue(n, m, target)\n{\n  countLessValue(n, m, target)\n}\n\nlemma CountIncreases(n: int, m: int, t1: int, t2: int)\n  requires n >= 1 && m >= 1 && 1 <= t1 < t2\n  ensures countLessOrEqualValue(n, m, t1) <= countLessOrEqualValue(n, m, t2)\n{\n}\n\nlemma CountAtKthElement(n: int, m: int, k: int, val: int)\n  requires ValidInput(n, m, k)\n  requires 1 <= val <= n * m\n  requires countLessOrEqualValue(n, m, val) >= k\n  requires val == 1 || countLessOrEqualValue(n, m, val - 1) < k\n  ensures countLessOrEqualValue(n, m, val) >= k\n{\n}", "{\n  var low := 1;\n  var high := n * m;\n  result := 1;\n  \n  while low <= high\n    invariant 1 <= low <= n * m + 1\n    invariant 1 <= high <= n * m\n    invariant 1 <= result <= n * m\n    invariant low > 1 ==> countLessOrEqualValue(n, m, low - 1) < k\n    invariant high < n * m ==> countLessOrEqualValue(n, m, high + 1) >= k\n    invariant countLessOrEqualValue(n, m, result) >= k\n    invariant result == 1 || countLessOrEqualValue(n, m, result - 1) < k\n    decreases high - low\n  {\n    var mid := low + (high - low) / 2;\n    var count := countLessOrEqualValue(n, m, mid);\n    \n    if count >= k {\n      result := mid;\n      high := mid - 1;\n    } else {\n      low := mid + 1;\n    }\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

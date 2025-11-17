@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 305 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  result := 1;\n  while computePosition(result, v0, v1, a, l) < c\n    invariant result >= 1\n    invariant forall days :: 1 <= days < result ==> computePosition(days, v0, v1, a, l) < c\n    decreases c - computePosition(result, v0, v1, a, l)\n  {\n    result := result + 1;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

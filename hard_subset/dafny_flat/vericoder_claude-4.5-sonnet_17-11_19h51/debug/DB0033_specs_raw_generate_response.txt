@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 717 characters
+--------------------------------------------------------------------------------
+```json
+["ghost function ModExpHelper(x: nat, y: nat, z: nat): nat\n  requires z > 1\n{\n  if y == 0 then 1 % z else (x * ModExpHelper(x, y - 1, z)) % z\n}\n\nlemma ModExpEquivalence(x: nat, y: nat, z: nat)\n  requires z > 1\n  ensures ModExpHelper(x, y, z) == Exp_int(x, y) % z\n{\n  if y == 0 {\n  } else {\n    ModExpEquivalence(x, y - 1, z);\n  }\n}", "{\n  if |sy| == 1 && sy[0] == '0' {\n    res := \"1\";\n    return;\n  }\n  \n  var y_last := sy[|sy| - 1];\n  var sy_prefix := sy[0..|sy| - 1];\n  \n  var rec_res := ModExp(sx, sy_prefix, sz);\n  var squared := Mul(rec_res, rec_res);\n  \n  if y_last == '0' {\n    res := squared;\n  } else {\n    var temp := Mul(squared, sx);\n    res := temp;\n  }\n}"]
+```
+--------------------------------------------------------------------------------

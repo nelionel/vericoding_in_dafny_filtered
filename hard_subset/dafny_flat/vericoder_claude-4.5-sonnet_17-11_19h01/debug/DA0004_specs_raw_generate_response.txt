@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1461 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "predicate is_mirror_char(c: char, d: char)\n{\n  var pal := \"AHIMOoTUVvWwXxY\";\n  (c == d && c in pal) ||\n  (c == 'p' && d == 'q') || (c == 'q' && d == 'p') ||\n  (c == 'b' && d == 'd') || (c == 'd' && d == 'b')\n}\n\nlemma is_s_palindrome_equiv(s: string)\n  ensures is_s_palindrome(s) <==> (forall i :: 0 <= i < |s| / 2 ==> is_mirror_char(s[i], s[|s| - 1 - i]))\n{\n  if forall i :: 0 <= i < |s| / 2 ==> is_mirror_char(s[i], s[|s| - 1 - i]) {\n    assert forall i :: 0 <= i < |s| ==> \n      var j := |s| - 1 - i;\n      if i >= j then true\n      else is_mirror_char(s[i], s[j]);\n  }\n  if is_s_palindrome(s) {\n    assert forall i :: 0 <= i < |s| / 2 ==> is_mirror_char(s[i], s[|s| - 1 - i]);\n  }\n}",
+  "{\n  var pal := \"AHIMOoTUVvWwXxY\";\n  var is_pal := true;\n  var i := 0;\n  while i < |s| / 2\n    invariant 0 <= i <= |s| / 2\n    invariant is_pal <==> (forall k :: 0 <= k < i ==> is_mirror_char(s[k], s[|s| - 1 - k]))\n  {\n    var j := |s| - 1 - i;\n    var match := false;\n    if s[i] == s[j] && s[i] in pal {\n      match := true;\n    } else if (s[i] == 'p' && s[j] == 'q') || (s[i] == 'q' && s[j] == 'p') {\n      match := true;\n    } else if (s[i] == 'b' && s[j] == 'd') || (s[i] == 'd' && s[j] == 'b') {\n      match := true;\n    }\n    if !match {\n      is_pal := false;\n    }\n    i := i + 1;\n  }\n  is_s_palindrome_equiv(s);\n  if is_pal {\n    result := \"TAK\";\n  } else {\n    result := \"NIE\";\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

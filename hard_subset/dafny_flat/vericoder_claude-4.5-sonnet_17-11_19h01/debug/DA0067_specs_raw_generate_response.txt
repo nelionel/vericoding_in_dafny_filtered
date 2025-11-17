@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 679 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var minTime := getNextArrivalTime(routes[0].0, routes[0].1, t);\n  var minIndex := 0;\n  var i := 1;\n  \n  while i < n\n    invariant 0 <= i <= n\n    invariant 0 <= minIndex < i\n    invariant minTime == getNextArrivalTime(routes[minIndex].0, routes[minIndex].1, t)\n    invariant forall j :: 0 <= j < i ==> getNextArrivalTime(routes[minIndex].0, routes[minIndex].1, t) <= getNextArrivalTime(routes[j].0, routes[j].1, t)\n  {\n    var currentTime := getNextArrivalTime(routes[i].0, routes[i].1, t);\n    if currentTime < minTime {\n      minTime := currentTime;\n      minIndex := i;\n    }\n    i := i + 1;\n  }\n  \n  result := minIndex + 1;\n}"
+]
+```
+--------------------------------------------------------------------------------

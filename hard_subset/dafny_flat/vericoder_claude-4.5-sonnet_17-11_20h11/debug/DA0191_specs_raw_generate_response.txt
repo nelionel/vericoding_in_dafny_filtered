@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 343 characters
+--------------------------------------------------------------------------------
+[
+  "",
+  "{\n  ghost var shifts := AllDistinctCyclicShifts(s);\n  var seen: set<string> := {};\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant seen == set j | 0 <= j < i :: ApplyShifts(s, j)\n  {\n    var current := ApplyShifts(s, i);\n    seen := seen + {current};\n    i := i + 1;\n  }\n  result := |seen|;\n}"
+]
+--------------------------------------------------------------------------------

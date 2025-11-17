@@ -87,28 +87,42 @@ def apply_json_replacements(
         json_match = re.search(
             r"```json\s*(.*?)\s*```", llm_response, re.DOTALL | re.IGNORECASE
         )
+        replacements = None
+        json_str = None
+
         if json_match:
             # Found JSON in code block - use group(1) for the content inside
             json_str = json_match.group(1)
+            try:
+                replacements = json.loads(json_str)
+            except json.JSONDecodeError as e:
+                error = f"JSON parsing failed: Invalid JSON syntax - {str(e)}"
+                logger.error(error)
+                logger.error(
+                    f"Failed to parse JSON string: {repr(json_str[:200])}..."
+                )
+                return original_code, error
         else:
-            # Try to find JSON array without code block (use greedy matching to get the full array)
-            json_match = re.search(r"\[.*\]", llm_response, re.DOTALL)
-            if json_match:
-                # Found plain JSON array - use group(0) for the whole match
-                json_str = json_match.group(0)
-            else:
+            # Walk every '[' and attempt to decode a JSON array using the standard decoder.
+            decoder = json.JSONDecoder()
+            for match in re.finditer(r"\[", llm_response):
+                snippet = llm_response[match.start() :]
+                try:
+                    candidate, end = decoder.raw_decode(snippet)
+                except json.JSONDecodeError:
+                    continue
+
+                if isinstance(candidate, list):
+                    json_str = snippet[:end]
+                    replacements = candidate
+            if replacements is None:
                 error = "JSON parsing failed: No JSON array found in LLM response"
                 logger.error(error)
                 return original_code, error
-        try:
-            replacements = json.loads(json_str)
-        except json.JSONDecodeError as e:
-            # Add debug info for JSON parsing failures
-            error = f"JSON parsing failed: Invalid JSON syntax - {str(e)}"
+
+        if not isinstance(replacements, list):
+            error = "JSON parsing failed: Expected JSON array, got something else"
             logger.error(error)
-            logger.error(
-                f"Failed to parse JSON string: {repr(json_str[:200])}..."
-            )  # First 200 chars for debugging
             return original_code, error
 
         if not isinstance(replacements, list):

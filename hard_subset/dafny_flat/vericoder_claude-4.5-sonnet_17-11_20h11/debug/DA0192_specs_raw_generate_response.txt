@@ -1,0 +1,8 @@
+=== Raw LLM Generate Response ===
+Length: 1056 characters
+--------------------------------------------------------------------------------
+[
+  "",
+  "{\n  var q := 1;\n  while q * q < n\n    invariant q >= 1\n    decreases n - q * q\n  {\n    q := q + 1;\n  }\n  \n  var r := 1;\n  while r * q < n\n    invariant r >= 1\n    decreases n - r * q\n  {\n    r := r + 1;\n  }\n  \n  if q * r == n {\n    result := q * k + r;\n    return;\n  }\n  \n  var best := n * k + 1;\n  var q_test := 1;\n  \n  while q_test <= n\n    invariant q_test >= 1\n    invariant best > 0\n    invariant forall x :: 1 <= x < q_test && x % k < k ==> (x / k) * (x % k) != n || best <= x\n    decreases n - q_test + 1\n  {\n    var r_test := 1;\n    while r_test < k\n      invariant r_test >= 1\n      invariant best > 0\n      invariant forall x :: x / k == q_test && 1 <= x % k < r_test ==> (x / k) * (x % k) != n || best <= x\n      decreases k - r_test\n    {\n      if q_test * r_test == n {\n        var candidate := q_test * k + r_test;\n        if candidate < best {\n          best := candidate;\n        }\n      }\n      r_test := r_test + 1;\n    }\n    q_test := q_test + 1;\n  }\n  \n  result := best;\n}"
+]
+--------------------------------------------------------------------------------

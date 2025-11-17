@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 946 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  var processedInput := TrimNewline(input);\n  var stripped := StripWhitespace(processedInput);\n  \n  if |stripped| >= 5 {\n    var hasLower := false;\n    var hasUpper := false;\n    var hasDigit := false;\n    \n    var i := 0;\n    while i < |stripped|\n      invariant 0 <= i <= |stripped|\n      invariant hasLower ==> ContainsLowercase(stripped[..i])\n      invariant hasUpper ==> ContainsUppercase(stripped[..i])\n      invariant hasDigit ==> ContainsDigit(stripped[..i])\n    {\n      if 'a' <= stripped[i] <= 'z' {\n        hasLower := true;\n      }\n      if 'A' <= stripped[i] <= 'Z' {\n        hasUpper := true;\n      }\n      if '0' <= stripped[i] <= '9' {\n        hasDigit := true;\n      }\n      i := i + 1;\n    }\n    \n    if hasLower && hasUpper && hasDigit {\n      output := \"Correct\\n\";\n    } else {\n      output := \"Too weak\\n\";\n    }\n  } else {\n    output := \"Too weak\\n\";\n  }\n}"]
+```
+--------------------------------------------------------------------------------

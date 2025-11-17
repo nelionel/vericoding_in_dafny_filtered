@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 1342 characters
+--------------------------------------------------------------------------------
+```json
+["lemma OptimalRotationExists(cameraAngle: int)\n    ensures exists r :: 0 <= r <= 3 && IsOptimalRotations(cameraAngle, r)\n{\n    var dev0 := ImageDeviationAfterRotations(cameraAngle, 0);\n    var dev1 := ImageDeviationAfterRotations(cameraAngle, 1);\n    var dev2 := ImageDeviationAfterRotations(cameraAngle, 2);\n    var dev3 := ImageDeviationAfterRotations(cameraAngle, 3);\n}\n\nlemma MinDeviationIsOptimal(cameraAngle: int, r: int)\n    requires 0 <= r <= 3\n    requires forall k :: 0 <= k <= 3 ==> ImageDeviationAfterRotations(cameraAngle, r) <= ImageDeviationAfterRotations(cameraAngle, k)\n    ensures IsOptimalRotations(cameraAngle, r)\n{\n}", "{\n    var dev0 := ImageDeviationAfterRotations(x, 0);\n    var dev1 := ImageDeviationAfterRotations(x, 1);\n    var dev2 := ImageDeviationAfterRotations(x, 2);\n    var dev3 := ImageDeviationAfterRotations(x, 3);\n    \n    result := 0;\n    var minDev := dev0;\n    \n    if dev1 < minDev {\n        result := 1;\n        minDev := dev1;\n    }\n    \n    if dev2 < minDev {\n        result := 2;\n        minDev := dev2;\n    }\n    \n    if dev3 < minDev {\n        result := 3;\n        minDev := dev3;\n    }\n    \n    assert ImageDeviationAfterRotations(x, result) == minDev;\n    assert forall k :: 0 <= k <= 3 ==> minDev <= ImageDeviationAfterRotations(x, k);\n}"]
+```
+--------------------------------------------------------------------------------

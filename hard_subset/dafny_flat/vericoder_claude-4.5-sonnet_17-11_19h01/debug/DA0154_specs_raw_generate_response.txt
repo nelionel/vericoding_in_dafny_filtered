@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1508 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "",
+  "{\n  var extended := s + seq(k, j => '*');\n  var max_len := |extended|;\n  result := 0;\n  \n  var i := 0;\n  while i < max_len\n    invariant 0 <= i <= max_len\n    invariant result >= 0\n    invariant result % 2 == 0\n    invariant result <= |s| + k\n    invariant forall idx, n :: 0 <= idx < i && 2 <= n <= max_len - idx && n % 2 == 0 && \n              is_tandem_repeat(extended[idx..idx+n]) ==> n <= result\n    invariant result > 0 ==> exists idx, n :: 0 <= idx < i && 2 <= n <= max_len - idx && n % 2 == 0 && \n              is_tandem_repeat(extended[idx..idx+n]) && n == result\n  {\n    var n := 2;\n    while n <= max_len - i\n      invariant 2 <= n <= max_len - i + 2\n      invariant n % 2 == 0\n      invariant result >= 0\n      invariant result % 2 == 0\n      invariant result <= |s| + k\n      invariant forall idx, len :: 0 <= idx < i && 2 <= len <= max_len - idx && len % 2 == 0 && \n                is_tandem_repeat(extended[idx..idx+len]) ==> len <= result\n      invariant forall len :: 2 <= len < n && len % 2 == 0 && \n                is_tandem_repeat(extended[i..i+len]) ==> len <= result\n      invariant result > 0 ==> exists idx, len :: 0 <= idx < max_len && 2 <= len <= max_len - idx && len % 2 == 0 && \n                is_tandem_repeat(extended[idx..idx+len]) && len == result\n    {\n      if is_tandem_repeat(extended[i..i+n]) {\n        if n > result {\n          result := n;\n        }\n      }\n      n := n + 2;\n    }\n    i := i + 1;\n  }\n}"
+]
+```
+--------------------------------------------------------------------------------

@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 from vericoding.core import ProcessingConfig
 from vericoding.core.prompts import PromptLoader
-from vericoding.processing import process_files_parallel
+from vericoding.processing import ProcessingResult, process_files_parallel
 from vericoding.utils import generate_summary, generate_csv_results
 from vericoding.core.rate_limiter import (
     initialize_global_rate_limiter,
@@ -145,6 +145,18 @@ def parse_args() -> argparse.Namespace:
         "--vllm-api-key",
         default=os.getenv("VLLM_API_KEY", "dummy"),
         help="API key forwarded to the local vLLM server (if required)",
+    )
+    parser.add_argument(
+        "--vllm-max-tokens",
+        type=int,
+        default=int(os.getenv("VLLM_MAX_TOKENS", "4000")),
+        help="Maximum completion tokens to request from the vLLM backend",
+    )
+    parser.add_argument(
+        "--vllm-request-timeout",
+        type=float,
+        default=float(os.getenv("VLLM_REQUEST_TIMEOUT", "300")),
+        help="Timeout (seconds) for each vLLM completion request",
     )
     parser.add_argument(
         "--wandb-mode",
@@ -313,7 +325,7 @@ def run_for_model(
     model_alias: str,
     files: list[Path],
     metadata: dict[str, dict],
-) -> None:
+) -> tuple[list[ProcessingResult], Path]:
     language_configs = ProcessingConfig.get_available_languages()
     dafny_config = language_configs["dafny"]
 
@@ -342,6 +354,8 @@ def run_for_model(
         llm_name=model_alias,
         vllm_base_url=args.vllm_base_url,
         vllm_api_key=args.vllm_api_key,
+        vllm_max_tokens=args.vllm_max_tokens,
+        vllm_request_timeout=args.vllm_request_timeout,
     )
 
     if args.verbose:
@@ -381,6 +395,7 @@ def run_for_model(
                 f"{stats['utilization']*100:.1f}% utilization"
             )
 
+    return results, model_output_dir
 
 def main() -> None:
     ensure_env_loaded()

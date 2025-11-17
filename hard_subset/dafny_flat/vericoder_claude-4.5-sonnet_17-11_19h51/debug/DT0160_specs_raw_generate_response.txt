@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1353 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "// Helper function to compute a single output sample of the inverse DFT\nfunction ComputeInverseDFTSample(a: seq<Complex>, j: nat, n: nat): real\n  requires |a| > 0\n  requires n > 0\n  requires j < n\n{\n  var dft_sum := ComplexSum(seq(|a|, i requires 0 <= i < |a| => \n    ComplexMul(a[i], ComplexExp(2.0 * PI * (i as real) * (j as real) / (n as real)))));\n  ComplexScale(1.0 / (n as real), dft_sum).re\n}\n\n// Lemma: ComplexSum is well-defined for all sequences\nlemma ComplexSumWellDefined(s: seq<Complex>)\n  ensures ComplexSum(s) == ComplexSum(s)\n{\n}\n\n// Lemma: Scaling and addition distribute over complex operations\nlemma LinearityHelper(alpha: real, beta: real, z1: Complex, z2: Complex)\n  ensures ComplexScale(alpha + beta, z1) == ComplexAdd(ComplexScale(alpha, z1), ComplexScale(beta, z1))\n{\n}\n\n// Lemma: Sum of zeros is zero\nlemma SumOfZerosIsZero(len: nat)\n  ensures ComplexSum(seq(len, i requires 0 <= i < len => Complex(0.0, 0.0))) == Complex(0.0, 0.0)\n{\n  if len == 0 {\n  } else {\n    var s := seq(len, i requires 0 <= i < len => Complex(0.0, 0.0));\n    SumOfZerosIsZero(len - 1);\n  }\n}\n\n// Lemma: Real sum is well-defined\nlemma RealSumWellDefined(s: seq<real>)\n  ensures RealSum(s) == RealSum(s)\n{\n}",
+  "{\n  result := seq(n, j requires 0 <= j < n => ComputeInverseDFTSample(a, j, n));\n}"
+]
+```
+--------------------------------------------------------------------------------

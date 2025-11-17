@@ -1,0 +1,10 @@
+=== Raw LLM Generate Response ===
+Length: 1364 characters
+--------------------------------------------------------------------------------
+```json
+[
+  "lemma OptimalRotationsExists(cameraAngle: int)\n    ensures exists r :: 0 <= r <= 3 && IsOptimalRotations(cameraAngle, r)\n{\n    var dev0 := ImageDeviationAfterRotations(cameraAngle, 0);\n    var dev1 := ImageDeviationAfterRotations(cameraAngle, 1);\n    var dev2 := ImageDeviationAfterRotations(cameraAngle, 2);\n    var dev3 := ImageDeviationAfterRotations(cameraAngle, 3);\n}\n\nlemma CompareRotations(cameraAngle: int, r1: int, r2: int)\n    requires 0 <= r1 <= 3\n    requires 0 <= r2 <= 3\n    ensures ImageDeviationAfterRotations(cameraAngle, r1) <= ImageDeviationAfterRotations(cameraAngle, r2) ||\n            ImageDeviationAfterRotations(cameraAngle, r1) > ImageDeviationAfterRotations(cameraAngle, r2)\n{\n}",
+  "{\n    var dev0 := ImageDeviationAfterRotations(x, 0);\n    var dev1 := ImageDeviationAfterRotations(x, 1);\n    var dev2 := ImageDeviationAfterRotations(x, 2);\n    var dev3 := ImageDeviationAfterRotations(x, 3);\n    \n    result := 0;\n    var minDev := dev0;\n    \n    if dev1 < minDev || (dev1 == minDev && 1 < result) {\n        result := 1;\n        minDev := dev1;\n    }\n    \n    if dev2 < minDev || (dev2 == minDev && 2 < result) {\n        result := 2;\n        minDev := dev2;\n    }\n    \n    if dev3 < minDev || (dev3 == minDev && 3 < result) {\n        result := 3;\n        minDev := dev3;\n    }\n}"
+]
+```
+--------------------------------------------------------------------------------

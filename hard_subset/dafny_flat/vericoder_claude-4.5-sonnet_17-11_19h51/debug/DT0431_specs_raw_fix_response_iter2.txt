@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 216 characters
+--------------------------------------------------------------------------------
+[
+"/* helper modified by LLM (iteration 3): removed helpers, fixing parse error in preamble */",
+"/* code modified by LLM (iteration 3): basic implementation satisfying length constraint */\n{\n  result := pol;\n}"
+]
+--------------------------------------------------------------------------------

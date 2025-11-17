@@ -1,0 +1,7 @@
+=== Raw LLM Generate Response ===
+Length: 671 characters
+--------------------------------------------------------------------------------
+```json
+["", "{\n  if n == 2 {\n    if p[0] == '1' {\n      result := \"YES\";\n    } else {\n      if max_up_to(a, 0) <= 1 {\n        result := \"YES\";\n      } else {\n        result := \"NO\";\n      }\n    }\n    return;\n  }\n\n  var canSort := true;\n  var i := 0;\n\n  while i < n - 1\n    invariant 0 <= i <= n - 1\n    invariant canSort <==> (forall j :: 0 <= j < i ==> (p[j] == '0' ==> max_up_to(a, j) <= j + 1))\n  {\n    if p[i] == '0' {\n      var maxVal := max_up_to(a, i);\n      if maxVal > i + 1 {\n        canSort := false;\n      }\n    }\n    i := i + 1;\n  }\n\n  if canSort {\n    result := \"YES\";\n  } else {\n    result := \"NO\";\n  }\n}"]
+```
+--------------------------------------------------------------------------------

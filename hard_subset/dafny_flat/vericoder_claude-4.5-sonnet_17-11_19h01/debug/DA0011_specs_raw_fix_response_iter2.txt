@@ -1,0 +1,8 @@
+=== Raw LLM Fix Response - Iteration 2 ===
+Length: 621 characters
+--------------------------------------------------------------------------------
+[
+  "/* helper modified by LLM (iteration 3): removed unnecessary helper that duplicates ValidInput */",
+  "{\n  /* code modified by LLM (iteration 3): fixed logic and loop invariant */\n  var canSort := true;\n  var i := 0;\n\n  while i < n - 1\n    invariant 0 <= i <= n - 1\n    invariant canSort <==> (forall j :: 0 <= j < i ==> (p[j] == '0' ==> max_up_to(a, j) <= j + 1))\n  {\n    if p[i] == '0' {\n      var maxVal := max_up_to(a, i);\n      if maxVal > i + 1 {\n        canSort := false;\n      }\n    }\n    i := i + 1;\n  }\n\n  if canSort {\n    result := \"YES\";\n  } else {\n    result := \"NO\";\n  }\n}"
+]
+--------------------------------------------------------------------------------
