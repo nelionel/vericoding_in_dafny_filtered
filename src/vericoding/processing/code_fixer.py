@@ -115,6 +115,7 @@ def apply_json_replacements(
                 if isinstance(candidate, list):
                     json_str = snippet[:end]
                     replacements = candidate
+                    break
             if replacements is None:
                 error = "JSON parsing failed: No JSON array found in LLM response"
                 logger.error(error)

@@ -2,7 +2,7 @@
 
 ## MAIN GOAL
 
-Run the `vericoding_in_dafny_filtered` evaluation suite against `Qwen/Qwen3-30B-A3B-Thinking-2507` using the available H200SXM resources, ensuring long-context support (≈100k tokens) via a vLLM server, and capture reproducible metrics/artifacts.
+Run the `vericoding_in_dafny_filtered` evaluation suite against `Qwen/Qwen3-30B-A3B-Thinking-2507` using the available H200SXM resources, ensuring long-context support (≈100k tokens) via a vLLM server, and capture reproducible metrics/artifacts. Compare this with OpenRouter runs and the upstream `vericoding` harness.
 
 ## PHASED IMPLEMENTATION PLAN
 
@@ -17,7 +17,7 @@ Run the `vericoding_in_dafny_filtered` evaluation suite against `Qwen/Qwen3-30B-
 - Phase 3: Execute eval and collect artifacts
   - Description: Run the `vericoding_in_dafny_filtered` eval against the vLLM endpoint, monitor progress, and save outputs/metrics for review.
   - Key tasks: Launch eval command(s), handle retries/failures, gather logs/results, summarize run in HISTORY.
-  - Current focus: cross-check OpenRouter outputs by running a 50-task hard-subset slice with `claude-haiku` to benchmark pass rates against the failing Qwen run.
+  - Current focus: Run comparison evals (OpenRouter vs Local vLLM vs Upstream Harness) on a random 50-problem subset.
 
 ## HISTORY
 
@@ -48,3 +48,5 @@ Run the `vericoding_in_dafny_filtered` evaluation suite against `Qwen/Qwen3-30B-
 - 2025-11-17: Built a “difficulty=2” control set (`hard_subset/dafny_flat/difficulty2_50_for_eval/files`, manifest + metadata) and ran both harnesses with Claude 4.5 Sonnet. `clean_eval` scored 30/50 (60 %) with artifacts in `eval_results/claude-4.5-sonnet_diff2_clean_rerun/claude-4.5-sonnet/`, while `vericoder.py` reached 15/50 (30 %) under `/workspace/vericoding_in_dafny_filtered/hard_subset/dafny_flat/vericoder_claude-4.5-sonnet_17-11_20h11/`. The gap shows the pipelines remain behaviorally different even on non-hard tasks; next work should focus on harmonizing prompts/sanitizers rather than assuming equivalence. Commands: `python - <<'PY' ...` (subset + metadata), `python -m clean_eval.cli --tasks-dir ...difficulty2_50_for_eval --models claude-4.5-sonnet --backend openrouter`, `python src/vericoder.py dafny ...difficulty2_50_for_eval --llm claude-4.5-sonnet --iterations 3`.
 - 2025-11-17: Noted runtime divergence on the same difficulty-2 slice: `clean_eval` (20 workers, OpenRouter) finished in ~8 min (`summary.txt` shows 30/50), whereas `vericoder.py` (4 threads) took ~11 min (`Total processing time: 681 s`), reinforcing that the pipelines aren’t interchangeable in throughput either. Next tuning pass should log concurrency/iteration knobs so future comparisons are apples-to-apples.
 - 2025-11-17: Updated the canonical `src/vericoder.py` to honor a configurable output root: new `--output-root` (and `VERICODER_OUTPUT_ROOT`) flags default to the nearest `eval_results/` ancestor, so datasets under `hard_subset/...` now emit artifacts in `.../eval_results/vericoder_<llm>_<timestamp>/` unless overridden. Files: `/workspace/vericoding/src/vericoder.py`, docs in `cursor_strategy/IMMEDIATE_GOAL.md`. Commands: `python src/vericoder.py dafny hard_subset/... --llm claude-4.5-sonnet --output-root /tmp/custom_results` (manual validation).
+- 2025-11-19: Created a fixed 50-problem random subset from `hard_subset/dafny_flat/files` to ensure consistent comparison across all runs. Destination: `vericoding_in_dafny_filtered/hard_subset/random_50_eval`. Checked for local model `Qwen/Qwen3-30B-A3B-Thinking-2507` in `/workspace/models` but it was missing (or path changed), blocking the local vLLM run. OpenRouter API key is also missing from environment.
+- 2025-11-19: Fixed `code_fixer.py` JSON extraction so we stop after the first valid array, eliminating the rampant “replacement count mismatch” errors on OpenRouter. Re-ran the 50-task `random_50_eval` slice with `qwen3-30b-thinking` at high throughput (`--max-iterations 5`, `rate-limit-rpm 120`, `max-concurrent-tasks 12`): completed in ~20 min with 8/50 specs passing (16 %). Saved artifacts under `eval_results/run1_openrouter_qwen_clean/qwen3-30b-thinking_6/`, generated `pass_fail_by_attempt.png`, and logged progress in `logs/eval1_openrouter_qwen_full.log`. Claude Haiku comparison run (same dataset, even higher rate cap) is now in-flight.
